@@ -1,0 +1,53 @@
+footer {
+  height: 200px;
+  width: 100%;
+  padding: 0 20px;
+  margin-top: 100px;
+  background-color: var(--card-background-color);
+  box-shadow: #0003 0 0 10px;
+  box-sizing: border-box;
+  position: relative;
+
+  @media only screen and (max-width: 1000px) {
+    margin-top: 20px;
+  }
+
+  .content {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    height: 100%;
+    text-align: right;
+    box-sizing: border-box;
+    position: relative;
+    background-position: left;
+    background-size: auto 200px;
+    background-repeat: no-repeat;
+
+    .text {
+      position: absolute;
+      bottom: 20px;
+      right: 0;
+    }
+
+    .lang {
+      margin-bottom: 20px;
+      user-select: none;
+
+      .select {
+        cursor: pointer;
+        margin-left: 15px;
+
+        &.now {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .copyright p {
+      margin: 5px 0;
+      font-size: 0.75em;
+      color: var(--font-color-lighter);
+    }
+  }
+}

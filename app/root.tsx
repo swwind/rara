@@ -1,5 +1,6 @@
 import {
   Links,
+  LinksFunction,
   LiveReload,
   Meta,
   Outlet,
@@ -8,8 +9,29 @@ import {
 } from "remix";
 import type { MetaFunction } from "remix";
 
+import Layout, { links as layoutLinks } from "./ui/layout";
+import Footer, { links as footerLinks } from "./components/footer";
+
+import globalStyle from "./styles/global.css";
+import typoStyle from "./styles/typography.css";
+
+import metadata from "./metadata.json";
+
+export const links: LinksFunction = () => [
+  ...layoutLinks(),
+  ...footerLinks(),
+  {
+    rel: "stylesheet",
+    href: globalStyle,
+  },
+  {
+    rel: "stylesheet",
+    href: typoStyle,
+  },
+];
+
 export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
+  return { title: metadata.title, description: metadata.description };
 };
 
 export default function App() {
@@ -22,7 +44,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <div className="main">
+          <Layout>
+            <Outlet />
+          </Layout>
+          <Footer />
+        </div>
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}

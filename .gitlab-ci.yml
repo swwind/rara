@@ -25,12 +25,12 @@ test_build:
     # check formats
     - yarn prettier --check app
 
+    # prisma
+    - echo DATABASE_URL="mongodb://$MONGO_INITDB_ROOT_USERNAME:$MONGO_INITDB_ROOT_PASSWORD@mongo:27017/admin" > .env
+    - yarn prisma db push
+
     # check types
     - yarn tsc
 
     # build
     - yarn build
-
-    # prisma
-    - echo DATABASE_URL="mongodb://$MONGO_INITDB_ROOT_USERNAME:$MONGO_INITDB_ROOT_PASSWORD@mongo:27017/admin" > .env
-    - yarn prisma db push

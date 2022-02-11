@@ -1,5 +1,5 @@
 import { LinksFunction } from "remix";
-import style from "./style.css";
+import style from "~/styles/ui/button.css";
 
 export const links: LinksFunction = () => [
   {

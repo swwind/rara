@@ -1,0 +1,52 @@
+{
+  "title": "swwind's blog",
+  "subtitle": "何も後悔なんてないさ",
+  "author": "swwind",
+  "avatar": "/avatar.png",
+  "origin": "https://blog.swwind.me",
+  "description": "Here is swwind's blog, feel free to leave a comment! 这里是 swwind 的个人博客，欢迎留言！",
+  "keywords": ["blog", "swwind"],
+  "footer": [
+    "Copyright © 2017-2022 swwind. All rights reserved",
+    "Except where otherwise noted, content on this blog is licensed under CC-BY 2.0"
+  ],
+  "friends": [
+    {
+      "name": "Paro",
+      "link": "https://paro.one/"
+    },
+    {
+      "name": "q234rty",
+      "link": "https://q234rty.top/"
+    },
+    {
+      "name": "zhouyuyang233 (巨佬)",
+      "link": "https://blog.csdn.net/zhouyuyang233/"
+    },
+    {
+      "name": "zhzh2001",
+      "link": "https://zhzh2001.bitbucket.io/"
+    },
+    {
+      "name": "sxyugao",
+      "link": "https://sxyugao.top/"
+    },
+    {
+      "name": "shajjl",
+      "link": "https://shajjl.github.io/"
+    },
+    {
+      "name": "timber3252",
+      "link": "https://blog.timber3252.me/"
+    },
+    {
+      "name": "largecube",
+      "link": "https://blog.csdn.net/largecub233"
+    },
+    {
+      "name": "attack204",
+      "link": "http://blog.attack204.com/"
+    }
+  ],
+  "post_per_page": 5
+}

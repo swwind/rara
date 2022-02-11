@@ -1,6 +1,6 @@
-import { LinksFunction } from "remix";
+import { Link, LinksFunction } from "remix";
 
-import Button, { links as buttonLinks } from "~/components/button";
+import Button, { links as buttonLinks } from "~/ui/button";
 
 export const links: LinksFunction = () => [...buttonLinks()];
 
@@ -10,27 +10,7 @@ export default function Index() {
       <h1>Welcome to Remix</h1>
       <ul>
         <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
+          <Link to="/post/new">/post/new</Link>
         </li>
         <li>
           <Button onClick={() => alert("xss")}>

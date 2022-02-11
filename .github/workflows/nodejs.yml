@@ -39,13 +39,13 @@ jobs:
     - name: Check formats
       run: yarn prettier --check app
 
+    - name: Check Database
+      run: |
+        echo DATABASE_URL="mongodb://testuser:testpassword@localhost:27017/admin" > .env
+        yarn prisma db push
+
     - name: Check types
       run: yarn tsc
 
     - name: Build
       run: yarn build
-
-    - name: Deploy
-      run: |
-        echo DATABASE_URL="mongodb://testuser:testpassword@localhost:27017/admin" > .env
-        yarn prisma db push

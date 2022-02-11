@@ -1,6 +1,8 @@
 node_modules
+*.log
 
 /.cache
 /server/build
 /public/build
+/app/styles
 .env

@@ -1,0 +1,30 @@
+article {
+  img {
+    max-width: 100%;
+    border-radius: 20px;
+
+    @media only screen and (max-width: 1000px) {
+      border-radius: 0;
+    }
+  }
+
+  .truth {
+    background-color: var(--background-color);
+    color: var(--background-color);
+
+    &:hover {
+      color: var(--font-color);
+    }
+  }
+
+  a[href] {
+    color: var(--color-light-blue);
+    text-decoration: underline;
+    transition: color 0.5s;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-blue);
+    }
+  }
+}

@@ -2,17 +2,38 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    String  @id @default(dbgenerated()) @map("_id") @db.ObjectId
-  email String  @unique
-  name  String?
+model Post {
+  url String @id
+
+  title   String
+  content String
+  banner  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  views Int @default(0)
+
+  replies Reply[]
+}
+
+model Reply {
+  id Int @id @default(autoincrement())
+
+  postUrl String
+  post    Post   @relation(fields: [postUrl], references: [url])
+
+  nickname String?
+  homepage String?
+  email    String?
+
+  content String
 }
