@@ -10,15 +10,28 @@ export const links: LinksFunction = () => [
   ...postHeaderLinks(),
 ];
 
+export type PostBriefData = Pick<
+  Post,
+  | "url"
+  | "banner"
+  | "content"
+  | "views"
+  | "category"
+  | "tags"
+  | "createdAt"
+  | "title"
+  | "pin"
+>;
+
 type Props = {
-  posts: Post[];
+  posts: PostBriefData[];
 };
 
 export default function PostList({ posts }: Props) {
   const getDescription = (content: string) => {
     const index = content.indexOf("<!-- more -->");
     return index === -1 ? content : content.substring(0, index);
-  }
+  };
 
   return (
     <div className="post-list">

@@ -1,14 +1,14 @@
-import { Post } from "@prisma/client";
-import { Link, LinksFunction, Outlet } from "remix";
+import { Link, LinksFunction } from "remix";
 
 import style from "~/styles/components/post-header.css";
 
 import Time from "~/ui/time";
+import type { PostBriefData } from "./post-list";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: style }];
 
 type Props = {
-  post: Post;
+  post: PostBriefData;
 };
 
 export default function PostHeader({ post }: Props) {

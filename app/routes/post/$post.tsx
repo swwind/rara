@@ -5,6 +5,8 @@ import { db } from "~/utils/db.server";
 import NotFound, { links as notFoundLinks } from "~/components/not-found";
 import PostHeader, { links as postHeaderLinks } from "~/components/post-header";
 import Card, { links as cardLinks } from "~/ui/card";
+import { renderMarkdown } from "~/utils/markdown";
+import PostContent from "~/components/post-content";
 
 export const links: LinksFunction = () => [
   ...notFoundLinks(),
@@ -21,10 +23,24 @@ export const loader: LoaderFunction = async ({ params }) => {
     where: {
       url: post,
     },
+    select: {
+      url: true,
+      banner: true,
+      content: true,
+      views: true,
+      category: true,
+      tags: true,
+      createdAt: true,
+      title: true,
+      pin: true,
+    },
   });
 
-  if (result) return json(result);
-  else return json(null, { status: 404 });
+  if (!result) {
+    return json(null, { status: 404 });
+  }
+
+  return json({ ...result, content: renderMarkdown(result.content) });
 };
 
 export default function PostView() {
@@ -37,7 +53,7 @@ export default function PostView() {
   return (
     <div className="post-view">
       <Card header={<PostHeader post={post} />}>
-        <div>{post.title}</div>
+        <PostContent children={post.content} />
       </Card>
     </div>
   );
