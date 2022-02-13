@@ -10,7 +10,7 @@ export const links: LinksFunction = () => [
 
 type Props = {
   header?: JSX.Element;
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
 };
 
 export default function Card({ header, children }: Props) {

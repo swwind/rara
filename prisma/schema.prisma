@@ -15,12 +15,17 @@ model Post {
 
   title   String
   content String
-  banner  String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  modifiedAt DateTime @default(now())
 
-  views Int @default(0)
+  banner   String?
+  category String
+  tags     String[]
+  pin      Int      @default(0)
+  hidden   Boolean  @default(true)
+  views    Int      @default(0)
 
   replies Reply[]
 }
@@ -34,6 +39,18 @@ model Reply {
   nickname String?
   homepage String?
   email    String?
+  content  String
 
-  content String
+  createdAt DateTime @default(now())
+
+  notify Boolean @default(false)
+
+  replyTo Int?
+}
+
+model File {
+  filename String   @id
+  mimetype String
+  size     Int
+  uploadAt DateTime @default(now())
 }

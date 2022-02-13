@@ -1,0 +1,36 @@
+.card-button-large {
+  color: unset;
+  text-decoration: none;
+  display: block;
+  padding: 15px 40px 15px 20px;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 0.3s, color 0.3s;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &::after {
+    content: "»";
+    color: transparent;
+    position: absolute;
+    transition: color 0.3s, right 0.3s;
+    right: 30px;
+    top: 15px;
+  }
+
+  &:hover {
+    color: var(--color-blue);
+    background-color: var(--hover-color);
+
+    &::after {
+      color: var(--color-blue);
+      right: 20px;
+    }
+  }
+
+  & + .card-button-large {
+    margin-top: 10px;
+  }
+}

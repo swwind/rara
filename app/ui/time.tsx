@@ -1,11 +1,13 @@
 type Props = {
-  time: Date;
+  time: Date | string;
 };
 
 export default function Time({ time }: Props) {
-  const year = time.getFullYear();
-  const month = time.getMonth() + 1;
-  const day = time.getDay();
+  const date = new Date(time);
+
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDay();
 
   return (
     <time dateTime={`${year}-${month}-${day}`}>

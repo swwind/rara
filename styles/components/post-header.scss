@@ -1,0 +1,62 @@
+.post-header {
+  padding: 20px 20px 0;
+
+  .post-header__placeholder {
+    padding-bottom: 15%;
+  }
+
+  .post-header__title {
+    margin: 0 0 10px;
+
+    a {
+      color: unset;
+      text-decoration: none;
+    }
+  }
+
+  .post-header__meta {
+    color: var(--font-color-lighter);
+
+    > * {
+      margin-right: 15px;
+      display: inline-block;
+    }
+
+    > a {
+      color: var(--color-blue);
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+      line-height: 1em;
+    }
+
+    .tag,
+    .category {
+      text-decoration: underline;
+    }
+
+    @mixin icon-before($selector, $icon) {
+      #{$selector}::before {
+        content: $icon + " ";
+      }
+    }
+
+    @include icon-before("time", "🕒");
+    @include icon-before(".tag", "🏷️");
+    @include icon-before(".category", "📁");
+    @include icon-before(".view", "👀");
+  }
+
+  &.banner {
+    padding: 20px;
+    background: {
+      size: cover;
+      position: center;
+    }
+
+    * {
+      color: white;
+      text-shadow: #333 1px 0 1px,#333 -1px 0 1px,#333 0 1px 1px,#333 0 -1px 1px;
+    }
+  }
+}

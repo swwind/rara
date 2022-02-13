@@ -64,3 +64,17 @@ body {
   background-color: var(--background-color);
   color: var(--font-color);
 }
+
+body,
+.main {
+  min-height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+
+  .layout {
+    flex: 1;
+  }
+}

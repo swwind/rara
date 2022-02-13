@@ -1,5 +1,6 @@
 import { LinksFunction } from "remix";
-import style from "~/styles/ui/button.css";
+
+import style from "~/styles/ui/link-button.css";
 
 export const links: LinksFunction = () => [
   {
@@ -9,14 +10,14 @@ export const links: LinksFunction = () => [
 ];
 
 type Props = {
-  children: JSX.Element;
+  children: string;
   onClick: () => void;
 };
 
-export default function Button({ children, onClick }: Props) {
+export default function LinkButton({ children, onClick }: Props) {
   return (
-    <button className="button" onClick={onClick}>
+    <span className="link-button" onClick={onClick}>
       {children}
-    </button>
+    </span>
   );
 }

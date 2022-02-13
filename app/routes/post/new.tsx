@@ -15,7 +15,7 @@ export const action: ActionFunction = async ({ request }) => {
     throw 233;
   }
 
-  await db.post.create({ data: { url, title, content } });
+  await db.post.create({ data: { url, title, content, category: "Default" } });
 
   return redirect(`/post/${url}`);
 };

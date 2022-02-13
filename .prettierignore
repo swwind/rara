@@ -1,1 +1,4 @@
-*.css
+/public/build
+/server/build
+/app/styles
+/.cache

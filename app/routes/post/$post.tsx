@@ -3,8 +3,14 @@ import { json, LinksFunction, LoaderFunction, useLoaderData } from "remix";
 import { db } from "~/utils/db.server";
 
 import NotFound, { links as notFoundLinks } from "~/components/not-found";
+import PostHeader, { links as postHeaderLinks } from "~/components/post-header";
+import Card, { links as cardLinks } from "~/ui/card";
 
-export const links: LinksFunction = () => [...notFoundLinks()];
+export const links: LinksFunction = () => [
+  ...notFoundLinks(),
+  ...cardLinks(),
+  ...postHeaderLinks(),
+];
 
 type LoaderData = Post | null;
 
@@ -29,9 +35,10 @@ export default function PostView() {
   }
 
   return (
-    <div>
-      <div>title: {post.title}</div>
-      <div>content: {post.content}</div>
+    <div className="post-view">
+      <Card header={<PostHeader post={post} />}>
+        <div>{post.title}</div>
+      </Card>
     </div>
   );
 }
