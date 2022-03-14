@@ -12,13 +12,18 @@ type Props = {
 export default function CardButtonLarge({ href, children }: Props) {
   if (href.startsWith("/")) {
     return (
-      <Link className="card-button-large" to={href}>
+      <Link className="card-button-large" to={href} title={children}>
         {children}
       </Link>
     );
   } else {
     return (
-      <a href={href} className="card-button-large" target="_blank">
+      <a
+        href={href}
+        className="card-button-large"
+        target="_blank"
+        title={children}
+      >
         {children}
       </a>
     );

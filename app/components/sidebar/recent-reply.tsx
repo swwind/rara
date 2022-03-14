@@ -25,15 +25,17 @@ type Props = {
 export default function RecentReply({ replies }: Props) {
   return (
     <Card header={<CardTitle title="💬 Recent Replies" />}>
-      {replies.map((reply) => (
-        <CardButtonLarge
-          href={`/post/${reply.post}#${reply.id}`}
-          children={`${reply.nickname || "Anonymous"} replied at [${
-            reply.post.title
-          }]`}
-          key={reply.id}
-        />
-      ))}
+      <div style={{ margin: "20px 0" }}>
+        {replies.map((reply) => (
+          <CardButtonLarge
+            href={`/post/${reply.post.url}#${reply.id}`}
+            children={`${reply.nickname || "Anonymous"} replied at [${
+              reply.post.title
+            }]`}
+            key={reply.id}
+          />
+        ))}
+      </div>
     </Card>
   );
 }

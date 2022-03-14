@@ -16,18 +16,20 @@
 
   .post-header__meta {
     color: var(--font-color-lighter);
+    margin: 0;
+    padding: 0;
 
-    > * {
+    li {
       margin-right: 15px;
       display: inline-block;
-    }
 
-    > a {
-      color: var(--color-blue);
-      text-decoration: none;
-      transition: color 0.2s;
-      cursor: pointer;
-      line-height: 1em;
+      a {
+        color: var(--color-blue);
+        text-decoration: none;
+        transition: color 0.2s;
+        cursor: pointer;
+        line-height: 1em;
+      }
     }
 
     .tag,
