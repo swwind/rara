@@ -1,17 +1,15 @@
-.card {
+.rara-card {
   background-color: var(--card-background-color);
   color: var(--font-color);
   border-radius: 20px;
   overflow: hidden;
-  margin-bottom: 20px;
   box-shadow: #0003 0 0 10px;
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 768px) {
     border-radius: 0;
-    margin-bottom: 20px;
   }
 
-  .card__content {
-    padding: 0 20px;
+  .rara-card-content {
+    padding: 10px 20px 20px;
   }
 }

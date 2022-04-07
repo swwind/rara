@@ -1,4 +1,4 @@
-footer {
+.rara-footer {
   height: 200px;
   width: 100%;
   padding: 0 20px;
@@ -8,11 +8,11 @@ footer {
   box-sizing: border-box;
   position: relative;
 
-  @media only screen and (max-width: 1000px) {
+  @media only screen and (max-width: 768px) {
     margin-top: 20px;
   }
 
-  .content {
+  .rara-footer-content {
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
@@ -24,27 +24,26 @@ footer {
     background-size: auto 200px;
     background-repeat: no-repeat;
 
-    .text {
+    .rara-footer-text {
       position: absolute;
       bottom: 20px;
       right: 0;
     }
 
-    .lang {
-      margin-bottom: 20px;
+    .rara-footer-lang {
+      margin-bottom: 10px;
       user-select: none;
 
-      .select {
+      .rara-footer-lang-select {
         cursor: pointer;
-        margin-left: 15px;
 
-        &.now {
+        &.rara-footer-lang-select-active {
           font-weight: bold;
         }
       }
     }
 
-    .copyright p {
+    .rara-footer-copyright p {
       margin: 5px 0;
       font-size: 0.75em;
       color: var(--font-color-lighter);

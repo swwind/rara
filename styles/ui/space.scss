@@ -1,0 +1,12 @@
+.rara-space {
+  display: flex;
+  gap: 5px;
+  
+  &.horizontal {
+    flex-direction: row;
+    align-items: baseline;
+  }
+  &.vertical {
+    flex-direction: column;
+  }
+}

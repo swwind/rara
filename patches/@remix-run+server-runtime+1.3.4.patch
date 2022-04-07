@@ -1,0 +1,34 @@
+diff --git a/node_modules/@remix-run/server-runtime/routeModules.d.ts b/node_modules/@remix-run/server-runtime/routeModules.d.ts
+index 737d220..1b54176 100644
+--- a/node_modules/@remix-run/server-runtime/routeModules.d.ts
++++ b/node_modules/@remix-run/server-runtime/routeModules.d.ts
+@@ -18,7 +18,7 @@ export interface DataFunctionArgs {
+ /**
+  * A function that handles data mutations for a route.
+  */
+-export interface ActionFunction {
++export interface ActionFunction<AppData = any> {
+     (args: DataFunctionArgs): Promise<Response> | Response | Promise<AppData> | AppData;
+ }
+ /**
+@@ -52,7 +52,7 @@ export interface LinksFunction {
+ /**
+  * A function that loads data for a route.
+  */
+-export interface LoaderFunction {
++export interface LoaderFunction<AppData = any> {
+     (args: DataFunctionArgs): Promise<Response> | Response | Promise<AppData> | AppData;
+ }
+ /**
+@@ -60,9 +60,9 @@ export interface LoaderFunction {
+  * `<meta>` tags for a route. These tags will be merged with (and take
+  * precedence over) tags from parent routes.
+  */
+-export interface MetaFunction {
++export interface MetaFunction<AppData = any> {
+     (args: {
+-        data: AppData;
++        data?: AppData;
+         parentsData: RouteData;
+         params: Params;
+         location: Location;

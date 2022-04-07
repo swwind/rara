@@ -1,27 +1,9 @@
-import {
-  json,
-  Link,
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-  useLoaderData,
-} from "remix";
-import { Post } from "@prisma/client";
+import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
 
-import NotFound, { links as notFoundLinks } from "~/components/not-found";
-import PostList, {
-  links as postListLinks,
-  PostBriefData,
-} from "~/components/post-list";
+import PostList, { PostBriefData } from "~/src/PostList";
 
 import { db } from "~/utils/db.server";
 import metadata from "~/metadata.json";
-import { renderMarkdown } from "~/utils/markdown";
-
-export const links: LinksFunction = () => [
-  ...notFoundLinks(),
-  ...postListLinks(),
-];
 
 export const meta: MetaFunction = () => {
   return {
@@ -35,12 +17,18 @@ export const meta: MetaFunction = () => {
   };
 };
 
-type LoaderData = PostBriefData[] | null;
+type LoaderData = {
+  posts: PostBriefData[];
+};
 
-export const loader: LoaderFunction = async () => {
-  const array = await db.post.findMany({
+export const loader: LoaderFunction<LoaderData> = async ({ request }) => {
+  const searchParams = new URL(request.url).searchParams;
+  // FIXME:
+  const page = parseInt(searchParams.get("p") || "1");
+
+  const posts = await db.post.findMany({
     take: metadata.post_per_page,
-    skip: 0,
+    skip: (page - 1) * metadata.post_per_page,
     orderBy: [{ pin: "desc" }, { createdAt: "desc" }],
     select: {
       url: true,
@@ -55,30 +43,26 @@ export const loader: LoaderFunction = async () => {
     },
   });
 
-  if (!array.length) {
-    return json(null, { status: 404 });
+  if (!posts.length) {
+    throw new Response("Posts were not found", { status: 404 });
   }
 
-  return json(
-    array.map((post) => {
+  return {
+    posts: posts.map((post) => {
       const index = post.content.indexOf("<!-- more -->");
       const description =
         index === -1 ? post.content : post.content.substring(0, index);
-      const rendered = renderMarkdown(description);
+
       return {
         ...post,
-        content: rendered,
+        description,
       };
-    })
-  );
+    }),
+  };
 };
 
 export default function Index() {
-  const data = useLoaderData<LoaderData>();
+  const { posts } = useLoaderData<LoaderData>();
 
-  if (!data) {
-    return <NotFound />;
-  }
-
-  return <PostList posts={data} />;
+  return <PostList posts={posts} />;
 }

@@ -1,5 +1,4 @@
 import {
-  json,
   Links,
   LinksFunction,
   LiveReload,
@@ -8,44 +7,36 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useCatch,
   useLoaderData,
 } from "remix";
 
-import Layout, { links as layoutLinks } from "./ui/layout";
-import Footer, { links as footerLinks } from "./components/footer";
-import Author, { links as authorLinks } from "./components/sidebar/author";
-import CategoryList, {
-  links as categoryListLinks,
-} from "./components/sidebar/category-list";
-import TagList, { links as tagListLinks } from "./components/sidebar/tag-list";
-import FriendLinks, {
-  links as friendLinksLinks,
-} from "./components/sidebar/friend-links";
-import RecentReply, {
-  links as recentReplyLinks,
-  RecentReplyData,
-} from "./components/sidebar/recent-reply";
+import Layout from "~/src/ui/Layout";
+import Footer from "~/src/Footer";
+import Author from "~/src/sidebar/Author";
+import CategoryList from "~/src/sidebar/CategoryList";
+import TagList from "~/src/sidebar/TagList";
+import FriendLinks from "~/src/sidebar/FriendLinks";
+import RecentReply, { RecentReplyData } from "~/src/sidebar/RecentReply";
 
-import globalStyle from "./styles/global.css";
-import typoStyle from "./styles/typography.css";
+import globalStyle from "~/styles/global.css";
+import rokishi from "~/img/rokishi.webp";
 
-import { db } from "./utils/db.server";
+import { db } from "~/utils/db.server";
+import Space from "~/src/ui/Space";
+import { useState } from "react";
+import { LanguageContext, LanguageType } from "~/utils/context/language";
 
 export const links: LinksFunction = () => [
-  ...layoutLinks(),
-  ...footerLinks(),
-  ...authorLinks(),
-  ...categoryListLinks(),
-  ...tagListLinks(),
-  ...friendLinksLinks(),
-  ...recentReplyLinks(),
   {
     rel: "stylesheet",
     href: globalStyle,
   },
   {
-    rel: "stylesheet",
-    href: typoStyle,
+    rel: "preload",
+    href: rokishi,
+    as: "image",
+    type: "image/webp",
   },
 ];
 
@@ -55,7 +46,7 @@ type LoaderData = {
   replies: RecentReplyData[];
 };
 
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction<LoaderData> = async () => {
   const [categories, tags, replies] = await Promise.all([
     // get categories list
     db.post
@@ -98,47 +89,89 @@ export const loader: LoaderFunction = async () => {
     }),
   ]);
 
-  const result: LoaderData = {
+  return {
     categories,
     tags,
     replies,
   };
-
-  return json(result);
 };
 
-export default function App() {
-  const { categories, tags, replies } = useLoaderData<LoaderData>();
+type DocumentProps = {
+  title?: string;
+  children: React.ReactNode;
+};
+
+function Document({ title, children }: DocumentProps) {
+  const [language, setLanguage] = useState<LanguageType>("zh-CN");
 
   return (
-    <html lang="en">
+    <html lang={language}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        {title && <title>{title}</title>}
         <Meta />
         <Links />
       </head>
       <body>
-        <div className="main">
-          <Layout
-            sidebar={
-              <>
-                <Author />
-                <CategoryList categories={categories} />
-                <TagList tags={tags} />
-                <RecentReply replies={replies} />
-                <FriendLinks />
-              </>
-            }
-          >
-            <Outlet />
-          </Layout>
-          <Footer />
-        </div>
+        <LanguageContext.Provider value={{ language, setLanguage }}>
+          {children}
+        </LanguageContext.Provider>
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
       </body>
     </html>
+  );
+}
+
+export default function App() {
+  const { categories, tags, replies } = useLoaderData<LoaderData>();
+
+  return (
+    <Document>
+      <Space direction="vertical" gap={20} style={{ minHeight: "100vh" }}>
+        <Layout
+          sidebar={
+            <Space direction="vertical" gap={20}>
+              <Author />
+              <CategoryList categories={categories} />
+              <TagList tags={tags} />
+              <RecentReply replies={replies} />
+              <FriendLinks />
+            </Space>
+          }
+        >
+          <Outlet />
+        </Layout>
+        <Footer />
+      </Space>
+    </Document>
+  );
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+  return (
+    <Document title={`Error: ${error.message}`}>
+      <div>
+        <h1>Error: {error.message}</h1>
+        <pre>{error.stack}</pre>
+      </div>
+    </Document>
+  );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+
+  return (
+    <Document title={`Error: ${caught.status} ${caught.statusText}`}>
+      <div>
+        <h1>
+          Catch: {caught.status} {caught.statusText}
+        </h1>
+        <pre>{caught.data}</pre>
+      </div>
+    </Document>
   );
 }

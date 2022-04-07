@@ -1,19 +1,19 @@
-.loading {
+.rara-loading {
   text-align: center;
 
-  .loading__circle {
+  .rara-loading-circle {
     width: 10px;
     height: 10px;
     background: var(--font-color-lighter);
     border-radius: 50%;
     display: inline-block;
-    animation: loading__animation 1s ease-in-out;
+    animation: rara-loading-animation 1s ease-in-out;
     animation-iteration-count: infinite;
     margin: 0 5px;
   }
 }
 
-@keyframes loading__animation {
+@keyframes rara-loading-animation {
   0%,
   100% {
     transform: translate(0);

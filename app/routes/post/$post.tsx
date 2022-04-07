@@ -1,22 +1,27 @@
 import { Post } from "@prisma/client";
-import { json, LinksFunction, LoaderFunction, useLoaderData } from "remix";
+import { LoaderFunction, useLoaderData } from "remix";
 import { db } from "~/utils/db.server";
 
-import NotFound, { links as notFoundLinks } from "~/components/not-found";
-import PostHeader, { links as postHeaderLinks } from "~/components/post-header";
-import Card, { links as cardLinks } from "~/ui/card";
-import { renderMarkdown } from "~/utils/markdown";
-import PostContent from "~/components/post-content";
+import PostHeader from "~/src/PostHeader";
+import Card from "~/src/ui/Card";
+import PostContent from "~/src/PostContent";
 
-export const links: LinksFunction = () => [
-  ...notFoundLinks(),
-  ...cardLinks(),
-  ...postHeaderLinks(),
-];
+type LoaderData = {
+  post: Pick<
+    Post,
+    | "url"
+    | "banner"
+    | "content"
+    | "views"
+    | "category"
+    | "tags"
+    | "createdAt"
+    | "title"
+    | "pin"
+  >;
+};
 
-type LoaderData = Post | null;
-
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
   const { post } = params;
 
   const result = await db.post.findUnique({
@@ -37,18 +42,16 @@ export const loader: LoaderFunction = async ({ params }) => {
   });
 
   if (!result) {
-    return json(null, { status: 404 });
+    throw new Response("Post was not found", { status: 404 });
   }
 
-  return json({ ...result, content: renderMarkdown(result.content) });
+  return {
+    post: result,
+  };
 };
 
 export default function PostView() {
-  const post = useLoaderData<LoaderData>();
-
-  if (!post) {
-    return <NotFound />;
-  }
+  const { post } = useLoaderData<LoaderData>();
 
   return (
     <div className="post-view">

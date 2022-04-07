@@ -43,6 +43,9 @@ async function seed() {
 
   const { id: rid1 } = await prisma.reply.create({
     data: {
+      nickname: "Anonymous",
+      email: "",
+      homepage: "",
       post: { connect: { url: p1 } },
       content: "第一篇回复",
     },
@@ -60,6 +63,9 @@ async function seed() {
 
   const { id: rid3 } = await prisma.reply.create({
     data: {
+      nickname: "Anonymous",
+      email: "",
+      homepage: "",
       post: { connect: { url: p1 } },
       replyTo: { connect: { id: rid1 } },
       content: "第san篇回复\n<script>alert('xss')</script>",

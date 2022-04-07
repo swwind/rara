@@ -18,9 +18,8 @@ model Post {
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  modifiedAt DateTime @default(now())
 
-  banner   String?
+  banner   String   @default("")
   category String
   tags     String[]
   pin      Int      @default(0)
@@ -36,9 +35,9 @@ model Reply {
   postUrl String
   post    Post   @relation(fields: [postUrl], references: [url])
 
-  nickname String?
-  homepage String?
-  email    String?
+  nickname String
+  homepage String
+  email    String
   content  String
 
   createdAt DateTime @default(now())
