@@ -1,10 +1,10 @@
-name: Gayhub CI
+name: GitHub CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, dev]
   pull_request:
-    branches: [master]
+    branches: [master, dev]
 
 jobs:
   build:
@@ -18,35 +18,41 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Deploy mongo
+      - name: Deploy postgres
         run: |
-          docker run -d -p 27017:27017 --name mongo \
-                     -e "MONGO_INITDB_ROOT_USERNAME=testuser" \
-                     -e "MONGO_INITDB_ROOT_PASSWORD=testpassword" \
-                     mongo
+          docker run -d -p 5432:5432 --name postgres \
+                     -e "POSTGRES_PASSWORD=mysecretpassword" \
+                     postgres
 
-      # - name: Deploy minio
-      #   run: |
-      #     docker run -d -p 9000:9000 --name minio \
-      #                -e "MINIO_ACCESS_KEY=testadmin" \
-      #                -e "MINIO_SECRET_KEY=testpassword" \
-      #                minio/minio server /data
+      - name: Deploy minio
+        run: |
+          docker run -d -p 9000:9000 --name minio \
+                     -e "MINIO_ACCESS_KEY=testadmin" \
+                     -e "MINIO_SECRET_KEY=testpassword" \
+                     minio/minio server /data
+
+      - name: Check version
+        run: |
+          node --version
+          yarn --version
 
       - name: Install dependencies
         run: yarn install
 
-      - name: Check formats
+      - name: Check formats and types
         run: |
-          yarn fmt
-          git diff --exit-code
+          yarn fmt:check
+          yarn lint:check
+          yarn tsc
 
-      - name: Check Database
+      - name: Configure Postgres & MinIO
         run: |
-          export DATABASE_URL="mongodb://testuser:testpassword@localhost:27017/admin"
+          export DATABASE_URL="postgres://postgres:mysecretpassword@localhost:5432/postgres"
+          export S3_ACCESS_KEY="testadmin"
+          export S3_SECRET_KEY="testpassword"
+          export S3_BUCKET="hitwhoj"
           yarn prisma db push
-
-      - name: Check types
-        run: yarn tsc
+          yarn prisma db seed
 
       - name: Build
         run: yarn build
