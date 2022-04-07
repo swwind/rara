@@ -1,5 +1,4 @@
-.rara-card-button  {
- 
+.rara-card-button {
   &.large {
     color: unset;
     text-decoration: none;
@@ -12,7 +11,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    
+
     &::after {
       content: "»";
       color: transparent;
@@ -21,11 +20,12 @@
       right: 30px;
       top: 15px;
     }
-    
-    &:hover, &.active {
+
+    &:hover,
+    &.active {
       color: var(--color-blue);
       background-color: var(--hover-color);
-      
+
       &::after {
         color: var(--color-blue);
         right: 20px;
