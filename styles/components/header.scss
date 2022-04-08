@@ -1,0 +1,14 @@
+.rara-layout-header {
+  height: 4em;
+  background-color: var(--card-background-color);
+  box-shadow: #0003 0 0 10px;
+
+  .rara-layout-header-container {
+    display: flex;
+    height: 100%;
+    width: min(calc(100% - 40px), 1300px);
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

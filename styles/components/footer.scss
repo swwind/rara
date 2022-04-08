@@ -1,4 +1,4 @@
-.rara-footer {
+.rara-layout-footer {
   height: 200px;
   width: 100%;
   padding: 0 20px;
@@ -12,7 +12,7 @@
     margin-top: 20px;
   }
 
-  .rara-footer-content {
+  .rara-layout-footer-content {
     width: 100%;
     max-width: 1300px;
     margin: 0 auto;
@@ -24,26 +24,26 @@
     background-size: auto 200px;
     background-repeat: no-repeat;
 
-    .rara-footer-text {
+    .rara-layout-footer-text {
       position: absolute;
       bottom: 20px;
       right: 0;
     }
 
-    .rara-footer-lang {
+    .rara-layout-footer-lang {
       margin-bottom: 10px;
       user-select: none;
 
-      .rara-footer-lang-select {
+      .rara-layout-footer-lang-select {
         cursor: pointer;
 
-        &.rara-footer-lang-select-active {
+        &.rara-layout-footer-lang-select-active {
           font-weight: bold;
         }
       }
     }
 
-    .rara-footer-copyright p {
+    .rara-layout-footer-copyright p {
       margin: 5px 0;
       font-size: 0.75em;
       color: var(--font-color-lighter);

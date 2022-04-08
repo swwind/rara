@@ -26,6 +26,7 @@ import { db } from "~/utils/db.server";
 import Space from "~/src/ui/Space";
 import { useState } from "react";
 import { LanguageContext, LanguageType } from "~/utils/context/language";
+import Header from "./src/Header";
 
 export const links: LinksFunction = () => [
   {
@@ -131,6 +132,7 @@ export default function App() {
   return (
     <Document>
       <Space direction="vertical" gap={20} style={{ minHeight: "100vh" }}>
+        <Header />
         <Layout
           sidebar={
             <Space direction="vertical" gap={20}>

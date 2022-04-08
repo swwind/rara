@@ -18,9 +18,9 @@ export default function PostHeader({ post }: Props) {
       }}
     >
       {post.banner && <div className="rara-post-header-placeholder" />}
-      <h1 className="rara-post-header-title">
+      <h2 className="rara-post-header-title">
         <Link to={`/post/${post.url}`}>{post.title}</Link>
-      </h1>
+      </h2>
       <Space direction="horizontal" gap={10}>
         <Time time={post.createdAt} />
         <Link

@@ -3,9 +3,8 @@
   flex: 1;
   flex-direction: row-reverse;
   gap: 20px;
-  margin: 20px auto;
-  width: 1300px;
-  max-width: calc(100% - 40px);
+  margin: 0 auto;
+  width: min(calc(100% - 40px), 1300px);
 
   .rara-layout-left {
     width: 25%;

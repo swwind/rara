@@ -41,7 +41,7 @@
     transition: background-color 0.3s, color 0.3s;
     border-radius: 10px;
 
-    &:hover {
+    &:hover, &.active {
       color: var(--color-blue);
       background-color: var(--hover-color);
     }

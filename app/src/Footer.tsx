@@ -25,15 +25,15 @@ export default function Footer() {
   const { language, setLanguage } = useContext(LanguageContext);
 
   return (
-    <footer className="rara-footer">
+    <footer className="rara-layout-footer">
       <div
-        className="rara-footer-content"
+        className="rara-layout-footer-content"
         style={{ backgroundImage: `url(${rokishi})` }}
       >
-        <div className="rara-footer-text">
+        <div className="rara-layout-footer-text">
           <Space
             direction="horizontal"
-            className="rara-footer-lang"
+            className="rara-layout-footer-lang"
             gap={15}
             style={{ display: "inline-flex" }}
           >
@@ -41,9 +41,9 @@ export default function Footer() {
             {options.map((option) => (
               <span
                 key={option.language}
-                className={`rara-footer-lang-select ${
+                className={`rara-layout-footer-lang-select ${
                   option.language === language
-                    ? "rara-footer-lang-select-active"
+                    ? "rara-layout-footer-lang-select-active"
                     : ""
                 }`}
                 onClick={() => setLanguage(option.language as LanguageType)}
@@ -52,7 +52,7 @@ export default function Footer() {
               </span>
             ))}
           </Space>
-          <div className="rara-footer-copyright">
+          <div className="rara-layout-footer-copyright">
             {footer.map((text, index) => (
               <p key={index}>{text}</p>
             ))}

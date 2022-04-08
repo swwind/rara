@@ -12,7 +12,7 @@ export default function TagList({ tags }: Props) {
     <Card header={<CardTitle title="🏷️ Tags" />}>
       <Space direction="horizontal">
         {tags.map((tag) => (
-          <CardButton href={`/tag/${tag}`} key={tag} size="small">
+          <CardButton href={`/tag/${tag}`} key={tag} size="small" nav={true}>
             {tag}
           </CardButton>
         ))}
