@@ -1,9 +1,10 @@
 .rara-card {
-  background-color: var(--card-background-color);
-  color: var(--font-color);
+  background-color: var(--bg-color-2);
+  color: var(--fg-color-1);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: #0003 0 0 10px;
+  transition: background-color 0.3s, color 0.3s;
 
   @media only screen and (max-width: 768px) {
     border-radius: 0;

@@ -1,8 +1,7 @@
 import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
-
-import PostList, { PostBriefData } from "~/src/PostList";
-
-import { db } from "~/utils/db.server";
+import PostList from "~/src/PostList";
+import { getPostBriefDataList, PostBriefData } from "~/utils/posts";
+import { parsePage } from "~/utils/utils";
 import metadata from "~/metadata.json";
 
 export const meta: MetaFunction = () => {
@@ -19,50 +18,24 @@ export const meta: MetaFunction = () => {
 
 type LoaderData = {
   posts: PostBriefData[];
+  total: number;
 };
 
 export const loader: LoaderFunction<LoaderData> = async ({ request }) => {
   const searchParams = new URL(request.url).searchParams;
-  // FIXME:
-  const page = parseInt(searchParams.get("p") || "1");
+  const page = parsePage(searchParams.get("p"));
 
-  const posts = await db.post.findMany({
-    take: metadata.post_per_page,
-    skip: (page - 1) * metadata.post_per_page,
-    orderBy: [{ pin: "desc" }, { createdAt: "desc" }],
-    select: {
-      url: true,
-      banner: true,
-      content: true,
-      views: true,
-      category: true,
-      tags: true,
-      createdAt: true,
-      title: true,
-      pin: true,
-    },
-  });
+  const { posts, total } = await getPostBriefDataList({}, page);
 
   if (!posts.length) {
     throw new Response("Posts were not found", { status: 404 });
   }
 
-  return {
-    posts: posts.map((post) => {
-      const index = post.content.indexOf("<!-- more -->");
-      const description =
-        index === -1 ? post.content : post.content.substring(0, index);
-
-      return {
-        ...post,
-        description,
-      };
-    }),
-  };
+  return { posts, total };
 };
 
 export default function Index() {
-  const { posts } = useLoaderData<LoaderData>();
+  const { posts, total } = useLoaderData<LoaderData>();
 
-  return <PostList posts={posts} />;
+  return <PostList posts={posts} total={total} />;
 }

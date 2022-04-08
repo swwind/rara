@@ -2,6 +2,7 @@ import { Link } from "remix";
 import Card from "../ui/Card";
 
 import metadata from "~/metadata.json";
+import Space from "../ui/Space";
 
 export default function Author() {
   const { avatar, title, subtitle } = metadata;
@@ -12,10 +13,12 @@ export default function Author() {
         <Link to="/" className="rara-author-avatar">
           <img src={avatar} alt="avatar" />
         </Link>
-        <Link to="/" className="rara-author-title">
-          {title}
-        </Link>
-        <div className="rara-author-subtitle">{subtitle}</div>
+        <Space direction="vertical" gap={10} className="rara-author-meta">
+          <Link to="/" className="rara-author-meta-title">
+            {title}
+          </Link>
+          <div className="rara-author-meta-subtitle">{subtitle}</div>
+        </Space>
       </div>
     </Card>
   );

@@ -1,12 +1,19 @@
 .rara-author {
-  text-align: center;
-  margin: 25px 0 10px;
+  margin: 15px 0 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+  }
 
   .rara-author-avatar {
     display: block;
     height: 100px;
     width: 100px;
-    margin: 0 auto;
 
     img {
       height: 100px;
@@ -16,20 +23,19 @@
     }
   }
 
-  .rara-author-title {
+  .rara-author-meta {
+    color: var(--fg-color-1);
+    flex: 1;
+    align-items: center;
+
+    @media screen and (max-width: 768px) {
+      align-items: start;
+    }
+  }
+
+  .rara-author-meta-title {
     display: block;
-    margin-top: 20px;
     font-size: 1.5em;
     font-weight: bold;
-  }
-
-  .rara-author-subtitle {
-    margin-top: 10px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .rara-author {
-    display: none;
   }
 }

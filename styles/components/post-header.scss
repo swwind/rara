@@ -10,6 +10,24 @@
     font-weight: bold;
   }
 
+  &:not(.rara-post-header-banner) {
+    .rara-post-header-title {
+      color: var(--fg-color-1);
+    }
+    .rara-post-header-meta {
+      color: var(--fg-color-2);
+
+      .rara-post-header-meta-link {
+        text-decoration: underline;
+        transition: color 0.3s;
+
+        &:hover {
+          color: var(--color-blue);
+        }
+      }
+    }
+  }
+
   &.rara-post-header-banner {
     padding: 20px 20px 10px;
     color: white;

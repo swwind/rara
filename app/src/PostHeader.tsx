@@ -1,6 +1,6 @@
 import { Link } from "remix";
 import Time from "~/src/ui/Time";
-import { PostBriefData } from "./PostList";
+import { PostBriefData } from "~/utils/posts";
 import Space from "./ui/Space";
 
 type Props = {
@@ -21,21 +21,21 @@ export default function PostHeader({ post }: Props) {
       <h2 className="rara-post-header-title">
         <Link to={`/post/${post.url}`}>{post.title}</Link>
       </h2>
-      <Space direction="horizontal" gap={10}>
+      <Space direction="horizontal" gap={10} className="rara-post-header-meta">
         <Time time={post.createdAt} />
         <Link
           to={`/category/${post.category}`}
-          style={{ textDecoration: "underline" }}
+          className="rara-post-header-meta-link"
         >
-          📁 {post.category}
+          %{post.category}
         </Link>
         {post.tags.map((tag) => (
           <Link
             to={`/tag/${tag}`}
-            style={{ textDecoration: "underline" }}
+            className="rara-post-header-meta-link"
             key={tag}
           >
-            🏷️ {tag}
+            #{tag}
           </Link>
         ))}
         <span>📖 {post.views}</span>

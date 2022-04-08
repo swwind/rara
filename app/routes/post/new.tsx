@@ -12,7 +12,7 @@ export const action: ActionFunction = async ({ request }) => {
     typeof title !== "string" ||
     typeof content !== "string"
   ) {
-    throw 233;
+    throw new Response("Invalid form data", { status: 400 });
   }
 
   await db.post.create({ data: { url, title, content, category: "Default" } });

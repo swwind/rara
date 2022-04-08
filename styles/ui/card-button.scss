@@ -1,7 +1,5 @@
 .rara-card-button {
   &.large {
-    color: unset;
-    text-decoration: none;
     display: block;
     padding: 15px 40px 15px 20px;
     cursor: pointer;
@@ -14,9 +12,10 @@
 
     &::after {
       content: "»";
-      color: transparent;
+      color: var(--color-blue);
+      opacity: 0;
       position: absolute;
-      transition: color 0.3s, right 0.3s;
+      transition: opacity 0.3s, right 0.3s;
       right: 30px;
       top: 15px;
     }
@@ -24,18 +23,16 @@
     &:hover,
     &.active {
       color: var(--color-blue);
-      background-color: var(--hover-color);
+      background-color: var(--bg-color-3);
+    }
 
-      &::after {
-        color: var(--color-blue);
-        right: 20px;
-      }
+    &:hover::after {
+      opacity: 1;
+      right: 20px;
     }
   }
 
   &.small {
-    color: unset;
-    text-decoration: none;
     display: inline-block;
     padding: 10px 15px;
     transition: background-color 0.3s, color 0.3s;
@@ -44,7 +41,7 @@
     &:hover,
     &.active {
       color: var(--color-blue);
-      background-color: var(--hover-color);
+      background-color: var(--bg-color-3);
     }
   }
 }

@@ -1,0 +1,29 @@
+.rara-paginator {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  gap: 20px;
+
+  .rara-paginator-item {
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: var(--bg-color-2);
+    box-shadow: #0003 0 0 10px;
+    transition: background-color 0.5s, color 0.5s;
+
+    &:hover {
+      background-color: var(--bg-color-3);
+      color: var(--color-blue);
+    }
+
+    &.rara-paginator-item-disable {
+      background-color: unset;
+      box-shadow: unset;
+      color: unset;
+      cursor: default;
+    }
+  }
+}

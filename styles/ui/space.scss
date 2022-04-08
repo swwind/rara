@@ -2,11 +2,11 @@
   display: flex;
   gap: 5px;
 
-  &.horizontal {
+  &.rara-space-horizontal {
     flex-direction: row;
     align-items: baseline;
   }
-  &.vertical {
+  &.rara-space-vertical {
     flex-direction: column;
   }
 }

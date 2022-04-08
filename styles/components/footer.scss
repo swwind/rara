@@ -3,10 +3,12 @@
   width: 100%;
   padding: 0 20px;
   margin-top: 100px;
-  background-color: var(--card-background-color);
+  background-color: var(--bg-color-2);
+  color: var(--fg-color-1);
   box-shadow: #0003 0 0 10px;
   box-sizing: border-box;
   position: relative;
+  transition: background-color 0.3s, color 0.3s;
 
   @media only screen and (max-width: 768px) {
     margin-top: 20px;

@@ -9,11 +9,11 @@ article {
   }
 
   .truth {
-    background-color: var(--background-color);
-    color: var(--background-color);
+    background-color: var(--bg-color-1);
+    color: var(--bg-color-1);
 
     &:hover {
-      color: var(--font-color);
+      color: var(--fg-color-1);
     }
   }
 

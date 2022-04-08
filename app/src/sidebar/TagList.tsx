@@ -13,7 +13,7 @@ export default function TagList({ tags }: Props) {
       <Space direction="horizontal">
         {tags.map((tag) => (
           <CardButton href={`/tag/${tag}`} key={tag} size="small" nav={true}>
-            {tag}
+            {`#${tag}`}
           </CardButton>
         ))}
       </Space>

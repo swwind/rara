@@ -1,29 +1,18 @@
-import { Post } from "@prisma/client";
-
 import Card from "~/src/ui/Card";
 import PostContent from "~/src/PostContent";
 import PostHeader from "~/src/PostHeader";
 import Space from "./ui/Space";
+import Paginator from "./ui/Paginator";
+import { PostBriefData } from "~/utils/posts";
 
-export type PostBriefData = Pick<
-  Post,
-  | "url"
-  | "banner"
-  | "views"
-  | "category"
-  | "tags"
-  | "createdAt"
-  | "title"
-  | "pin"
-> & {
-  description: string;
-};
+import metadata from "~/metadata.json";
 
 type Props = {
   posts: PostBriefData[];
+  total: number;
 };
 
-export default function PostList({ posts }: Props) {
+export default function PostList({ posts, total }: Props) {
   return (
     <Space direction="vertical" gap={20}>
       {posts.map((post) => (
@@ -31,6 +20,7 @@ export default function PostList({ posts }: Props) {
           <PostContent children={post.description} />
         </Card>
       ))}
+      <Paginator total={Math.floor((total - 1) / metadata.post_per_page) + 1} />
     </Space>
   );
 }

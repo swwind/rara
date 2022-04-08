@@ -10,7 +10,9 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export default function Space({ direction, children, gap, ...props }: Props) {
-  props.className = `rara-space ${direction} ${props.className || ""}`;
+  props.className = `rara-space rara-space-${direction} ${
+    props.className || ""
+  }`;
   props.style = props.style ?? {};
   props.style.gap = gap ?? 5;
 

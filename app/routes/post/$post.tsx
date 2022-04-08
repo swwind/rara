@@ -1,10 +1,12 @@
 import { Post } from "@prisma/client";
-import { LoaderFunction, useLoaderData } from "remix";
+import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
 import { db } from "~/utils/db.server";
 
 import PostHeader from "~/src/PostHeader";
 import Card from "~/src/ui/Card";
 import PostContent from "~/src/PostContent";
+
+import metadata from "~/metadata.json";
 
 type LoaderData = {
   post: Pick<
@@ -19,6 +21,23 @@ type LoaderData = {
     | "title"
     | "pin"
   >;
+};
+
+export const meta: MetaFunction<LoaderData> = ({ data }) => {
+  const index = data?.post.content.indexOf("<!-- more -->");
+  const description =
+    typeof index === "number" && index > -1
+      ? data?.post.content.slice(0, index)
+      : data?.post.content;
+
+  return {
+    title: data?.post.title,
+    description,
+
+    "og:url": metadata.origin + "/post/" + data?.post.url,
+    "og:title": data?.post.title,
+    "og:description": description,
+  };
 };
 
 export const loader: LoaderFunction<LoaderData> = async ({ params }) => {

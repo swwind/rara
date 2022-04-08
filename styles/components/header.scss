@@ -1,7 +1,9 @@
 .rara-layout-header {
   height: 4em;
-  background-color: var(--card-background-color);
+  background-color: var(--bg-color-2);
+  color: var(--fg-color-1);
   box-shadow: #0003 0 0 10px;
+  transition: background-color 0.3s, color 0.3s;
 
   .rara-layout-header-container {
     display: flex;
@@ -10,5 +12,10 @@
     margin: 0 auto;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .rara-layout-header-theme-switch {
+    font-size: 1.5em;
+    cursor: pointer;
   }
 }
