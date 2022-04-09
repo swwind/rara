@@ -37,8 +37,10 @@ model Reply {
 
   nickname String
   homepage String
-  email    String
   content  String
+  email    String
+  github   String
+  qq       String
 
   createdAt DateTime @default(now())
 

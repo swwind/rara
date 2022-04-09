@@ -1,5 +1,5 @@
 import { Post, Reply } from "@prisma/client";
-import { TextRecentReplies } from "../Text";
+import { TextRecentReplies, TextRepliedAt } from "../Text";
 import Card from "../ui/Card";
 import CardButton from "../ui/CardButton";
 import CardTitle from "../ui/CardTitle";
@@ -20,12 +20,11 @@ export default function RecentReply({ replies }: Props) {
         {replies.map((reply) => (
           <CardButton
             href={`/post/${reply.post.slot}#${reply.id}`}
-            children={`${reply.nickname || "Anonymous"} replied at [${
-              reply.post.title
-            }]`}
             key={reply.id}
             size="large"
-          />
+          >
+            <TextRepliedAt author={reply.nickname} title={reply.post.title} />
+          </CardButton>
         ))}
       </Space>
     </Card>

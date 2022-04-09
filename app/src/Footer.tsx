@@ -7,8 +7,8 @@ import { LanguageContext, LanguageType } from "~/utils/context/language";
 
 const options = [
   {
-    language: "en",
-    text: "English",
+    language: "en-US",
+    text: "English (US)",
   },
   {
     language: "zh-CN",

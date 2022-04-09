@@ -6,8 +6,17 @@
   .rara-reply-avatar {
     height: 50px;
     width: 50px;
-    background-color: var(--bg-color-1);
     border-radius: 50%;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    font-size: 1.5em;
+    color: var(--color-white);
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .rara-reply-main {
@@ -15,6 +24,7 @@
     flex: 1;
     flex-direction: column;
     gap: 10px;
+
     .rara-reply-meta {
       .rara-reply-meta-nickname {
         font-weight: bold;
@@ -25,13 +35,37 @@
         }
       }
     }
+
     .rara-reply-content {
+      > :first-child {
+        margin-top: 0;
+      }
+
+      > :last-child {
+        margin-bottom: 0;
+      }
     }
+
     .rara-reply-actions {
+      display: flex;
+      gap: 10px;
       font-size: 0.75em;
       color: var(--fg-color-2);
+
+      .rara-reply-action-reply {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
+
     .rara-reply-comments {
     }
   }
+}
+
+.rara-reply-make-reply {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 20px;
+  row-gap: 5px;
 }

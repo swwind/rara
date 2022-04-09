@@ -43,11 +43,13 @@ async function seed() {
 
   const { id: rid1 } = await prisma.reply.create({
     data: {
-      nickname: "Anonymous",
-      email: "",
+      nickname: "timber3252",
       homepage: "",
       post: { connect: { slot: p1 } },
-      content: "第一篇回复",
+      content: "我太强啦",
+      email: "",
+      github: "timber3252",
+      qq: "",
     },
   });
 
@@ -55,20 +57,24 @@ async function seed() {
     data: {
       post: { connect: { slot: p1 } },
       nickname: "swwind",
-      email: "i@sww.moe",
       homepage: "https://swwind.me",
       content: "1. *第二篇回复*\n2. **fake**",
+      email: "swwind233@gmail.com",
+      github: "",
+      qq: "",
     },
   });
 
   const { id: rid3 } = await prisma.reply.create({
     data: {
       nickname: "Anonymous",
-      email: "",
       homepage: "",
       post: { connect: { slot: p1 } },
       replyTo: { connect: { id: rid1 } },
       content: "第san篇回复\n<script>alert('xss')</script>",
+      email: "",
+      github: "",
+      qq: "",
     },
   });
 }

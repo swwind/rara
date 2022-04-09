@@ -2,9 +2,9 @@ import { Link, NavLink } from "remix";
 
 type Props = {
   href: string;
-  children: string;
   size: "large" | "small";
   nav?: boolean;
+  children: React.ReactNode;
 };
 
 export default function CardButton({ href, children, size, nav }: Props) {
@@ -12,7 +12,7 @@ export default function CardButton({ href, children, size, nav }: Props) {
     const MyLink = nav ? NavLink : Link;
 
     return (
-      <MyLink className={`rara-card-button ${size}`} to={href} title={children}>
+      <MyLink className={`rara-card-button ${size}`} to={href}>
         {children}
       </MyLink>
     );
@@ -23,7 +23,6 @@ export default function CardButton({ href, children, size, nav }: Props) {
         className={`rara-card-button ${size}`}
         target="_blank"
         rel="noopener noreferrer"
-        title={children}
       >
         {children}
       </a>

@@ -63,6 +63,8 @@ export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
         select: {
           nickname: true,
           email: true,
+          github: true,
+          qq: true,
           homepage: true,
           createdAt: true,
           content: true,
