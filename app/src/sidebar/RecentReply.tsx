@@ -19,7 +19,7 @@ export default function RecentReply({ replies }: Props) {
       <Space direction="vertical">
         {replies.map((reply) => (
           <CardButton
-            href={`/post/${reply.post.slot}#${reply.id}`}
+            href={`/post/${reply.post.slot}#reply-${reply.id}`}
             key={reply.id}
             size="large"
           >

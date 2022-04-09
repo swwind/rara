@@ -185,7 +185,7 @@ function ReplyList({ id }: { id: number }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="rara-reply">
+    <div className="rara-reply" id={`reply-${reply.id}`}>
       <div
         className="rara-reply-avatar"
         style={{ backgroundColor: `var(--color-${color})` }}
