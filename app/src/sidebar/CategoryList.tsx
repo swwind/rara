@@ -1,3 +1,4 @@
+import { TextCategories } from "../Text";
 import Card from "../ui/Card";
 import CardButton from "../ui/CardButton";
 import CardTitle from "../ui/CardTitle";
@@ -9,7 +10,7 @@ type Props = {
 
 export default function CategoryList({ categories }: Props) {
   return (
-    <Card header={<CardTitle title="📁 Categories" />}>
+    <Card header={<CardTitle title={<TextCategories prefix="📁 " />} />}>
       <Space direction="vertical">
         {categories.map((category) => (
           <CardButton

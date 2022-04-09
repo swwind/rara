@@ -1,0 +1,37 @@
+.rara-reply {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+
+  .rara-reply-avatar {
+    height: 50px;
+    width: 50px;
+    background-color: var(--bg-color-1);
+    border-radius: 50%;
+  }
+
+  .rara-reply-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 10px;
+    .rara-reply-meta {
+      .rara-reply-meta-nickname {
+        font-weight: bold;
+        color: var(--color-pink);
+
+        &.link {
+          text-decoration: underline;
+        }
+      }
+    }
+    .rara-reply-content {
+    }
+    .rara-reply-actions {
+      font-size: 0.75em;
+      color: var(--fg-color-2);
+    }
+    .rara-reply-comments {
+    }
+  }
+}

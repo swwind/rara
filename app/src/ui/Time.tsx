@@ -1,3 +1,5 @@
+import { TextDateTime } from "../Text";
+
 type Props = {
   time: Date | string;
 };
@@ -11,7 +13,7 @@ export default function Time({ time }: Props) {
 
   return (
     <time dateTime={`${year}-${month}-${day}`}>
-      🕒 {`${year}/${month}/${day}`}
+      🕒 <TextDateTime time={date} />
     </time>
   );
 }

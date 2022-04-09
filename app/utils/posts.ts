@@ -8,7 +8,7 @@ import metadata from "~/metadata.json";
  */
 export type PostBriefData = Pick<
   Post,
-  | "url"
+  | "slot"
   | "banner"
   | "views"
   | "category"
@@ -16,23 +16,25 @@ export type PostBriefData = Pick<
   | "createdAt"
   | "title"
   | "pin"
-> & {
+>;
+
+export type PostBriefDataWithDescription = PostBriefData & {
   description: string;
 };
 
 type NonNullable<T> = T extends null | undefined ? never : T;
 
-export async function getPostBriefDataList(
+export async function getPostList(
   where: NonNullable<Parameters<typeof db.post.findMany>[0]>["where"],
   page: number
-): Promise<{ posts: PostBriefData[]; total: number }> {
+): Promise<{ posts: PostBriefDataWithDescription[]; total: number }> {
   const posts = await db.post.findMany({
     where,
     take: metadata.post_per_page,
     skip: (page - 1) * metadata.post_per_page,
     orderBy: [{ pin: "desc" }, { createdAt: "desc" }],
     select: {
-      url: true,
+      slot: true,
       banner: true,
       views: true,
       category: true,

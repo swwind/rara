@@ -1,12 +1,13 @@
 import { LoaderFunction, useLoaderData, useParams } from "remix";
 import PostList from "~/src/PostList";
+import { TextTagColon } from "~/src/Text";
 import Space from "~/src/ui/Space";
 import Title from "~/src/ui/Title";
-import { getPostBriefDataList, PostBriefData } from "~/utils/posts";
+import { getPostList, PostBriefDataWithDescription } from "~/utils/posts";
 import { parsePage } from "~/utils/utils";
 
 type LoaderData = {
-  posts: PostBriefData[];
+  posts: PostBriefDataWithDescription[];
   total: number;
 };
 
@@ -18,7 +19,7 @@ export const loader: LoaderFunction<LoaderData> = async ({
   const searchParams = new URL(request.url).searchParams;
   const page = parsePage(searchParams.get("p"));
 
-  const { posts, total } = await getPostBriefDataList(
+  const { posts, total } = await getPostList(
     {
       tags: {
         has: tag,
@@ -40,7 +41,7 @@ export default function CategoryPosts() {
 
   return (
     <Space direction="vertical" gap={20}>
-      <Title title={`标签：${tag}`}></Title>
+      <Title title={<TextTagColon suffix={tag} />} />
       <PostList posts={posts} total={total} />
     </Space>
   );

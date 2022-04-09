@@ -1,7 +1,8 @@
+import React from "react";
 import Card from "./Card";
 
 type Props = {
-  title: string;
+  title: React.ReactNode;
 };
 
 export default function Title({ title }: Props) {

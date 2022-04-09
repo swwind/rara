@@ -4,7 +4,7 @@ import { PostBriefData } from "~/utils/posts";
 import Space from "./ui/Space";
 
 type Props = {
-  post: Omit<PostBriefData, "description">;
+  post: PostBriefData;
 };
 
 export default function PostHeader({ post }: Props) {
@@ -19,7 +19,7 @@ export default function PostHeader({ post }: Props) {
     >
       {post.banner && <div className="rara-post-header-placeholder" />}
       <h2 className="rara-post-header-title">
-        <Link to={`/post/${post.url}`}>{post.title}</Link>
+        <Link to={`/post/${post.slot}`}>{post.title}</Link>
       </h2>
       <Space direction="horizontal" gap={10} className="rara-post-header-meta">
         <Time time={post.createdAt} />

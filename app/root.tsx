@@ -1,11 +1,9 @@
 import {
-  createCookie,
   Links,
   LinksFunction,
   LiveReload,
   LoaderFunction,
   Meta,
-  MetaFunction,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -90,7 +88,7 @@ export const loader: LoaderFunction<LoaderData> = async ({ request }) => {
         nickname: true,
         post: {
           select: {
-            url: true,
+            slot: true,
             title: true,
           },
         },

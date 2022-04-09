@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Post {
-  url String @id
+  slot String @id
 
   title   String
   content String
@@ -32,8 +32,8 @@ model Post {
 model Reply {
   id Int @id @default(autoincrement())
 
-  postUrl String
-  post    Post   @relation(fields: [postUrl], references: [url])
+  post     Post   @relation(fields: [postSlot], references: [slot])
+  postSlot String
 
   nickname String
   homepage String

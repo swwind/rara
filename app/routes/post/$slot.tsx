@@ -7,11 +7,13 @@ import Card from "~/src/ui/Card";
 import PostContent from "~/src/PostContent";
 
 import metadata from "~/metadata.json";
+import PostReply, { PostReplyData } from "~/src/PostReply";
+import Space from "~/src/ui/Space";
 
 type LoaderData = {
   post: Pick<
     Post,
-    | "url"
+    | "slot"
     | "banner"
     | "content"
     | "views"
@@ -20,7 +22,9 @@ type LoaderData = {
     | "createdAt"
     | "title"
     | "pin"
-  >;
+  > & {
+    replies: PostReplyData[];
+  };
 };
 
 export const meta: MetaFunction<LoaderData> = ({ data }) => {
@@ -34,21 +38,19 @@ export const meta: MetaFunction<LoaderData> = ({ data }) => {
     title: data?.post.title,
     description,
 
-    "og:url": metadata.origin + "/post/" + data?.post.url,
+    "og:url": metadata.origin + "/post/" + data?.post.slot,
     "og:title": data?.post.title,
     "og:description": description,
   };
 };
 
 export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
-  const { post } = params;
+  const { slot } = params;
 
-  const result = await db.post.findUnique({
-    where: {
-      url: post,
-    },
+  const post = await db.post.findUnique({
+    where: { slot },
     select: {
-      url: true,
+      slot: true,
       banner: true,
       content: true,
       views: true,
@@ -57,26 +59,36 @@ export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
       createdAt: true,
       title: true,
       pin: true,
+      replies: {
+        select: {
+          nickname: true,
+          email: true,
+          homepage: true,
+          createdAt: true,
+          content: true,
+          id: true,
+          replyToId: true,
+        },
+      },
     },
   });
 
-  if (!result) {
+  if (!post) {
     throw new Response("Post was not found", { status: 404 });
   }
 
-  return {
-    post: result,
-  };
+  return { post };
 };
 
 export default function PostView() {
   const { post } = useLoaderData<LoaderData>();
 
   return (
-    <div className="post-view">
+    <Space direction="vertical" gap={20}>
       <Card header={<PostHeader post={post} />}>
         <PostContent children={post.content} />
       </Card>
-    </div>
+      <PostReply replies={post.replies} />
+    </Space>
   );
 }

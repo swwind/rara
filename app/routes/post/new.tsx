@@ -3,21 +3,21 @@ import { db } from "~/utils/db.server";
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
-  const url = form.get("url");
+  const slot = form.get("slot");
   const title = form.get("title");
   const content = form.get("content");
 
   if (
-    typeof url !== "string" ||
+    typeof slot !== "string" ||
     typeof title !== "string" ||
     typeof content !== "string"
   ) {
     throw new Response("Invalid form data", { status: 400 });
   }
 
-  await db.post.create({ data: { url, title, content, category: "Default" } });
+  await db.post.create({ data: { slot, title, content, category: "Default" } });
 
-  return redirect(`/post/${url}`);
+  return redirect(`/post/${slot}`);
 };
 
 export default function PostNew() {
@@ -25,7 +25,7 @@ export default function PostNew() {
     <Form method="post">
       <label>
         <span>URL</span>
-        <input type="text" name="url" />
+        <input type="text" name="slot" />
       </label>
       <label>
         <span>Title</span>

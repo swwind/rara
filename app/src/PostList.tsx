@@ -3,12 +3,12 @@ import PostContent from "~/src/PostContent";
 import PostHeader from "~/src/PostHeader";
 import Space from "./ui/Space";
 import Paginator from "./ui/Paginator";
-import { PostBriefData } from "~/utils/posts";
+import { PostBriefDataWithDescription } from "~/utils/posts";
 
 import metadata from "~/metadata.json";
 
 type Props = {
-  posts: PostBriefData[];
+  posts: PostBriefDataWithDescription[];
   total: number;
 };
 
@@ -16,7 +16,7 @@ export default function PostList({ posts, total }: Props) {
   return (
     <Space direction="vertical" gap={20}>
       {posts.map((post) => (
-        <Card header={<PostHeader post={post} />} key={post.url}>
+        <Card header={<PostHeader post={post} />} key={post.slot}>
           <PostContent children={post.description} />
         </Card>
       ))}

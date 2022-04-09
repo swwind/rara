@@ -1,4 +1,5 @@
 import metadata from "~/metadata.json";
+import { TextFriendLinks } from "../Text";
 import Card from "../ui/Card";
 import CardButton from "../ui/CardButton";
 import CardTitle from "../ui/CardTitle";
@@ -8,7 +9,7 @@ export default function FriendLinks() {
   const { friends } = metadata;
 
   return (
-    <Card header={<CardTitle title="🔗 Friend Links" />}>
+    <Card header={<CardTitle title={<TextFriendLinks prefix="🔗 " />} />}>
       <Space direction="vertical">
         {friends.map(({ link, name }) => (
           <CardButton href={link} key={name} size="large">

@@ -1,3 +1,4 @@
+import { TextTags } from "../Text";
 import Card from "../ui/Card";
 import CardButton from "../ui/CardButton";
 import CardTitle from "../ui/CardTitle";
@@ -9,7 +10,7 @@ type Props = {
 
 export default function TagList({ tags }: Props) {
   return (
-    <Card header={<CardTitle title="🏷️ Tags" />}>
+    <Card header={<CardTitle title={<TextTags prefix="🏷️ " />} />}>
       <Space direction="horizontal">
         {tags.map((tag) => (
           <CardButton href={`/tag/${tag}`} key={tag} size="small" nav={true}>
