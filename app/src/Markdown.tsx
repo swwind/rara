@@ -57,7 +57,10 @@ export function Markdown({ major, children }: Props) {
             ]
       }
       components={{
-        a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+        a: ({
+          children,
+          ...props
+        }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
           const externalProps = !props.href?.startsWith("#") && {
             target: "_blank",
             rel: "noreferrer noopener",
@@ -65,7 +68,9 @@ export function Markdown({ major, children }: Props) {
 
           return (
             <TextButton>
-              <a {...props} {...externalProps} />
+              <a {...props} {...externalProps}>
+                {children}
+              </a>
             </TextButton>
           );
         },
