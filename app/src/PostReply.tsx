@@ -1,11 +1,5 @@
 import { Reply } from "@prisma/client";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import {
   TextAvatarType,
   TextClose,
@@ -271,7 +265,7 @@ function ReplyList({ id }: { id: number }) {
           )}
         </div>
         <div className="rara-reply-content">
-          <Markdown>{reply.content}</Markdown>
+          <Markdown major={false}>{reply.content}</Markdown>
         </div>
         <div className="rara-reply-actions">
           <TextDateTime time={new Date(reply.createdAt)} />

@@ -6,8 +6,8 @@ type Props = {
 
 export default function PostContent({ children }: Props) {
   return (
-    <article>
-      <Markdown>{children}</Markdown>
+    <article className="rara-article">
+      <Markdown major={true}>{children}</Markdown>
     </article>
   );
 }

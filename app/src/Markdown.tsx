@@ -1,29 +1,77 @@
 import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
+import remarkGfm from "remark-gfm";
+import remarkGemoji from "remark-gemoji";
 import rehypeKatex from "rehype-katex";
-import Highlighter from "./Highlighter";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
+import rehypeSlug from "rehype-slug";
+import TextButton from "./ui/TextButton";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeHighlight from "rehype-highlight";
+import React from "react";
 
-export function Markdown({ children }: { children: string }) {
+type Props = {
+  major: boolean;
+  children: string;
+};
+
+/**
+ * @see https://www.npmjs.com/package/rehype-autolink-headings
+ */
+const autolinkHeadingOptions = {
+  behavior: "append",
+};
+
+/**
+ * @see https://www.npmjs.com/package/rehype-sanitize
+ */
+const sanitizeOptions = {
+  ...defaultSchema,
+  attributes: {
+    ...defaultSchema.attributes,
+    code: [...(defaultSchema.attributes?.code || []), "className"],
+    span: [...(defaultSchema.attributes?.span || []), "className"],
+  },
+};
+export function Markdown({ major, children }: Props) {
   return (
     <ReactMarkdown
-      remarkPlugins={[remarkMath]}
-      rehypePlugins={[rehypeKatex]}
+      remarkPlugins={[remarkGfm, remarkMath, remarkGemoji]}
+      remarkRehypeOptions={{ allowDangerousHtml: true }}
+      rehypePlugins={
+        major
+          ? [
+              rehypeKatex,
+              rehypeRaw,
+              rehypeHighlight,
+              rehypeSlug,
+              [rehypeAutolinkHeadings, autolinkHeadingOptions],
+              [rehypeSanitize, sanitizeOptions],
+            ]
+          : [
+              rehypeKatex,
+              rehypeRaw,
+              rehypeHighlight,
+              [rehypeSanitize, sanitizeOptions],
+            ]
+      }
       components={{
-        code({ node, inline, className, children, ...props }) {
-          const match = /language-(\w+)/.exec(className || "");
-          return !inline ? (
-            <Highlighter
-              children={String(children).replace(/\n$/, "")}
-              language={match ? match[1] : "plain"}
-            />
-          ) : (
-            <code className={className} {...props}>
-              {children}
-            </code>
+        a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+          const externalProps = !props.href?.startsWith("#") && {
+            target: "_blank",
+            rel: "noreferrer noopener",
+          };
+
+          return (
+            <TextButton>
+              <a {...props} {...externalProps} />
+            </TextButton>
           );
         },
       }}
-      children={children}
-    />
+    >
+      {children}
+    </ReactMarkdown>
   );
 }

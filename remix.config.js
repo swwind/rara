@@ -13,6 +13,5 @@ module.exports = {
     /^remark.*/,
     /^unified.*/,
     /^react-markdown.*/,
-    /^react-syntax-highlighter.*/,
   ],
 };

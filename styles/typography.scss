@@ -1,4 +1,4 @@
-article {
+.rara-article {
   img {
     max-width: 100%;
     border-radius: 20px;
@@ -17,14 +17,49 @@ article {
     }
   }
 
-  a[href] {
-    color: var(--color-light-blue);
-    text-decoration: underline;
-    transition: color 0.5s;
-    cursor: pointer;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    .rara-button-text a {
+      display: inline-grid;
+      place-items: center;
+      margin-left: 5px;
 
-    &:hover {
-      color: var(--color-blue);
+      &::before {
+        content: "#";
+        opacity: 0;
+        transform: translateX(-5px);
+        transition: opacity 0.3s, transform 0.3s;
+      }
+    }
+
+    &:hover .rara-button-text a {
+      &::before {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
   }
+}
+
+pre {
+  color: var(--fg-color-1);
+  background-color: var(--bg-color-1);
+  font-size: 1em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
+  padding: 20px;
+  margin: 0.5em 0px;
+  font-size: 1.25em;
+  overflow: auto;
+  border-radius: 20px;
 }
