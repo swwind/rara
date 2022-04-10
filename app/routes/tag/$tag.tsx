@@ -15,7 +15,7 @@ export const loader: LoaderFunction<LoaderData> = async ({
   request,
   params,
 }) => {
-  const { tag } = params;
+  const tag = params.tag!;
   const searchParams = new URL(request.url).searchParams;
   const page = parsePage(searchParams.get("p"));
 
@@ -24,13 +24,10 @@ export const loader: LoaderFunction<LoaderData> = async ({
       tags: {
         has: tag,
       },
+      hidden: false,
     },
     page
   );
-
-  if (!posts.length) {
-    throw new Response("Posts were not found", { status: 404 });
-  }
 
   return { posts, total };
 };

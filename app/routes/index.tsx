@@ -25,11 +25,7 @@ export const loader: LoaderFunction<LoaderData> = async ({ request }) => {
   const searchParams = new URL(request.url).searchParams;
   const page = parsePage(searchParams.get("p"));
 
-  const { posts, total } = await getPostList({}, page);
-
-  if (!posts.length) {
-    throw new Response("Posts were not found", { status: 404 });
-  }
+  const { posts, total } = await getPostList({ hidden: false }, page);
 
   return { posts, total };
 };

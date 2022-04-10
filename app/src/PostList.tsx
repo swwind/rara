@@ -8,7 +8,8 @@ import { PostBriefDataWithDescription } from "~/utils/posts";
 import metadata from "~/metadata.json";
 import { Link } from "remix";
 import TextButton from "./ui/TextButton";
-import { TextContinue } from "./Text";
+import { TextContinue, TextErrorHappens, TextNoPosts } from "./Text";
+import CardTitle from "./ui/CardTitle";
 
 type Props = {
   posts: PostBriefDataWithDescription[];
@@ -16,7 +17,7 @@ type Props = {
 };
 
 export default function PostList({ posts, total }: Props) {
-  return (
+  return posts.length ? (
     <Space direction="vertical" gap={20}>
       {posts.map((post) => (
         <Card header={<PostHeader post={post} />} key={post.slot}>
@@ -30,5 +31,11 @@ export default function PostList({ posts, total }: Props) {
       ))}
       <Paginator total={Math.floor((total - 1) / metadata.post_per_page) + 1} />
     </Space>
+  ) : (
+    <Card header={<CardTitle title={<TextErrorHappens />} />}>
+      <div style={{ color: "var(--fg-color-2)" }}>
+        <TextNoPosts />
+      </div>
+    </Card>
   );
 }

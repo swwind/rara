@@ -17,5 +17,21 @@
   .rara-layout-header-theme-switch {
     font-size: 1.5em;
     cursor: pointer;
+    display: block;
+    animation: {
+      name: rara-spin-animation;
+      duration: 5s;
+      timing-function: linear;
+      iteration-count: infinite;
+    }
+  }
+}
+
+@keyframes rara-spin-animation {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
