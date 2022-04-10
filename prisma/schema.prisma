@@ -46,9 +46,7 @@ model Reply {
 
   notify Boolean @default(false)
 
-  replyToId Int?
-  replyTo   Reply?  @relation("replytoreply", fields: [replyToId], references: [id])
-  replies   Reply[] @relation("replytoreply")
+  replyTo Int?
 }
 
 model File {

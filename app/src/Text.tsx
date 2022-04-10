@@ -163,3 +163,15 @@ export const TextNewReply = createComponent({
   "zh-CN": "新建回复",
   "ja-JP": "新規返信",
 });
+
+export const TextClose = createComponent({
+  "en-US": "Close",
+  "zh-CN": "关闭",
+  "ja-JP": "閉じる",
+});
+
+export const TextContinue = createComponent({
+  "en-US": "Continue »",
+  "zh-CN": "继续阅读 »",
+  "ja-JP": "お読み続ける »",
+});

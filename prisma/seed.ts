@@ -70,7 +70,7 @@ async function seed() {
       nickname: "Anonymous",
       homepage: "",
       post: { connect: { slot: p1 } },
-      replyTo: { connect: { id: rid1 } },
+      replyTo: rid1,
       content: "第san篇回复\n<script>alert('xss')</script>",
       email: "",
       github: "",

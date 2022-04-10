@@ -1,5 +1,10 @@
 import { Post } from "@prisma/client";
-import { LoaderFunction, MetaFunction, useLoaderData } from "remix";
+import {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+  useLoaderData,
+} from "remix";
 import { db } from "~/utils/db.server";
 
 import PostHeader from "~/src/PostHeader";
@@ -9,6 +14,7 @@ import PostContent from "~/src/PostContent";
 import metadata from "~/metadata.json";
 import PostReply, { PostReplyData } from "~/src/PostReply";
 import Space from "~/src/ui/Space";
+import { invariantString } from "~/utils/utils";
 
 type LoaderData = {
   post: Pick<
@@ -47,8 +53,13 @@ export const meta: MetaFunction<LoaderData> = ({ data }) => {
 export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
   const { slot } = params;
 
-  const post = await db.post.findUnique({
+  const post = await db.post.update({
     where: { slot },
+    data: {
+      views: {
+        increment: 1,
+      },
+    },
     select: {
       slot: true,
       banner: true,
@@ -69,7 +80,10 @@ export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
           createdAt: true,
           content: true,
           id: true,
-          replyToId: true,
+          replyTo: true,
+        },
+        orderBy: {
+          createdAt: "desc",
         },
       },
     },
@@ -80,6 +94,39 @@ export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
   }
 
   return { post };
+};
+
+export const action: ActionFunction = async ({ request, params }) => {
+  const form = await request.formData();
+  const { slot } = params;
+
+  const nickname = invariantString(form.get("nickname") || "Anonymous");
+  const homepage = invariantString(form.get("homepage"));
+  const email = invariantString(form.get("email") ?? "");
+  const github = invariantString(form.get("github") ?? "");
+  const qq = invariantString(form.get("qq") ?? "");
+  const content = invariantString(form.get("content"));
+  const _replyTo = invariantString(form.get("replyTo"));
+  const replyTo = /^\d+$/.test(_replyTo) ? parseInt(_replyTo) : null;
+
+  if (!content) {
+    throw new Response("Content is required", { status: 400 });
+  }
+
+  await db.reply.create({
+    data: {
+      nickname,
+      homepage,
+      email,
+      github,
+      qq,
+      content,
+      post: { connect: { slot } },
+      replyTo,
+    },
+  });
+
+  return null;
 };
 
 export default function PostView() {

@@ -24,10 +24,15 @@ import rokishi from "~/img/rokishi.webp";
 
 import { db } from "~/utils/db.server";
 import Space from "~/src/ui/Space";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LanguageContext, LanguageType } from "~/utils/context/language";
 import Header from "./src/Header";
 import { ThemeContext, ThemeType } from "./utils/context/theme";
+import {
+  defaultUserInfo,
+  UserInfo,
+  UserInfoContext,
+} from "./utils/context/userinfo";
 
 export const links: LinksFunction = () => [
   {
@@ -47,12 +52,38 @@ type LoaderData = {
   tags: string[];
   replies: RecentReplyData[];
   theme: ThemeType;
+  language: LanguageType;
 };
 
 export const loader: LoaderFunction<LoaderData> = async ({ request }) => {
-  const theme = request.headers.get("Cookie")?.includes("theme=dark")
-    ? "dark"
-    : "light";
+  const cookie = request.headers.get("Cookie") ?? "";
+  const acceptLanguage = request.headers.get("Accept-Language") ?? "";
+
+  const theme = cookie.includes("theme=dark") ? "dark" : "light";
+
+  let language: LanguageType = "en-US";
+
+  const result = /\blanguage=(en-US|zh-CN|ja-JP)\b/.exec(cookie);
+  if (result) {
+    language = result[1] as LanguageType;
+  } else {
+    // find the first acceptable language
+    for (const lang of acceptLanguage.split(",")) {
+      if (lang.startsWith("en")) {
+        language = "en-US";
+        break;
+      }
+      if (lang.startsWith("zh")) {
+        language = "zh-CN";
+        break;
+      }
+      if (lang.startsWith("ja")) {
+        language = "ja-JP";
+        break;
+      }
+    }
+    // otherwise we use the default language
+  }
 
   const [categories, tags, replies] = await Promise.all([
     // get categories list
@@ -101,18 +132,20 @@ export const loader: LoaderFunction<LoaderData> = async ({ request }) => {
     tags,
     replies,
     theme,
+    language,
   };
 };
 
 type DocumentProps = {
   title?: string;
   theme?: ThemeType;
+  language?: LanguageType;
   children: React.ReactNode;
 };
 
-function Document({ title, children, theme }: DocumentProps) {
-  const [language, setLanguage] = useState<LanguageType>("zh-CN");
+function Document({ title, children, theme, language }: DocumentProps) {
   theme = theme ?? "light";
+  language = language ?? "en-US";
 
   return (
     <html lang={language}>
@@ -125,9 +158,7 @@ function Document({ title, children, theme }: DocumentProps) {
         <Links />
       </head>
       <body data-theme={theme}>
-        <LanguageContext.Provider value={{ language, setLanguage }}>
-          {children}
-        </LanguageContext.Provider>
+        {children}
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === "development" && <LiveReload />}
@@ -142,29 +173,70 @@ export default function App() {
     tags,
     replies,
     theme: defaultTheme,
+    language: defaultLanguage,
   } = useLoaderData<LoaderData>();
-  const [theme, setTheme] = useState<ThemeType>(defaultTheme);
+
+  const [theme, _setTheme] = useState<ThemeType>(defaultTheme);
+  const [language, _setLanguage] = useState<LanguageType>(defaultLanguage);
+  const [userInfo, _setUserInfo] = useState<UserInfo>(defaultUserInfo);
+
+  const setTheme = (theme: ThemeType) => {
+    _setTheme(theme);
+    document.cookie = `theme=${theme}; path=/; Expires=9999-12-31`;
+  };
+
+  const setLanguage = (language: LanguageType) => {
+    _setLanguage(language);
+    document.cookie = `language=${language}; path=/; Expires=9999-12-31`;
+  };
+
+  const setUserInfo = (partial: Partial<UserInfo>) => {
+    const newUserInfo = { ...userInfo, ...partial };
+    _setUserInfo(newUserInfo);
+    localStorage.setItem("userInfo", JSON.stringify(newUserInfo));
+  };
+
+  useEffect(() => {
+    // load user info from local storage
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      _setUserInfo(JSON.parse(userInfo));
+    }
+
+    if (
+      // first time visit
+      !document.cookie.includes("theme") &&
+      // prefers dark color scheme
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      setTheme("dark");
+    }
+  }, []);
 
   return (
     <Document theme={theme}>
       <ThemeContext.Provider value={{ theme, setTheme }}>
-        <Space direction="vertical" gap={20} style={{ minHeight: "100vh" }}>
-          <Header />
-          <Layout
-            sidebar={
-              <Space direction="vertical" gap={20}>
-                <Author />
-                <CategoryList categories={categories} />
-                <TagList tags={tags} />
-                <RecentReply replies={replies} />
-                <FriendLinks />
-              </Space>
-            }
-          >
-            <Outlet />
-          </Layout>
-          <Footer />
-        </Space>
+        <LanguageContext.Provider value={{ language, setLanguage }}>
+          <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
+            <Space direction="vertical" gap={20} style={{ minHeight: "100vh" }}>
+              <Header />
+              <Layout
+                sidebar={
+                  <Space direction="vertical" gap={20}>
+                    <Author />
+                    <CategoryList categories={categories} />
+                    <TagList tags={tags} />
+                    <RecentReply replies={replies} />
+                    <FriendLinks />
+                  </Space>
+                }
+              >
+                <Outlet />
+              </Layout>
+              <Footer />
+            </Space>
+          </UserInfoContext.Provider>
+        </LanguageContext.Provider>
       </ThemeContext.Provider>
     </Document>
   );

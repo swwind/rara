@@ -6,6 +6,9 @@ import Paginator from "./ui/Paginator";
 import { PostBriefDataWithDescription } from "~/utils/posts";
 
 import metadata from "~/metadata.json";
+import { Link } from "remix";
+import TextButton from "./ui/TextButton";
+import { TextContinue } from "./Text";
 
 type Props = {
   posts: PostBriefDataWithDescription[];
@@ -18,6 +21,11 @@ export default function PostList({ posts, total }: Props) {
       {posts.map((post) => (
         <Card header={<PostHeader post={post} />} key={post.slot}>
           <PostContent children={post.description} />
+          <Link to={`/post/${post.slot}`}>
+            <TextButton>
+              <TextContinue />
+            </TextButton>
+          </Link>
         </Card>
       ))}
       <Paginator total={Math.floor((total - 1) / metadata.post_per_page) + 1} />

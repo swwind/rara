@@ -1,7 +1,14 @@
 import { Reply } from "@prisma/client";
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   TextAvatarType,
+  TextClose,
   TextContent,
   TextDateTime,
   TextEmail,
@@ -18,6 +25,8 @@ import CardTitle from "./ui/CardTitle";
 import md5 from "md5";
 import { useFetcher } from "remix";
 import { Markdown } from "./Markdown";
+import { UserInfoContext } from "~/utils/context/userinfo";
+import Space from "./ui/Space";
 
 export type PostReplyData = Pick<
   Reply,
@@ -29,7 +38,7 @@ export type PostReplyData = Pick<
   | "createdAt"
   | "content"
   | "id"
-  | "replyToId"
+  | "replyTo"
 >;
 
 const colors = [
@@ -64,9 +73,27 @@ const RepliesContext = createContext<{ replies: PostReplyData[] }>({
 
 type AvatarType = "qq" | "github" | "email";
 
-function ReplyForm({ replyTo }: { replyTo?: number }) {
+function ReplyForm({
+  replyTo,
+  onClose,
+}: {
+  replyTo?: number;
+  onClose?: () => void;
+}) {
   const fetcher = useFetcher();
-  const [avatarType, setAvatarType] = useState<AvatarType>("email");
+  const isSubmitting = fetcher.state === "submitting";
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+  const [avatarType, setAvatarType] = useState<AvatarType>(userInfo.avatarType);
+
+  useEffect(() => {
+    if (!isSubmitting) {
+      if (contentRef.current) {
+        contentRef.current.value = "";
+      }
+    }
+  }, [isSubmitting]);
 
   return (
     <fetcher.Form method="post" className="rara-reply-make-reply">
@@ -79,6 +106,8 @@ function ReplyForm({ replyTo }: { replyTo?: number }) {
           name="nickname"
           id="nickname"
           placeholder="Anonymous"
+          defaultValue={userInfo.nickname}
+          onChange={(e) => setUserInfo({ nickname: e.currentTarget.value })}
         />
       </div>
       <label htmlFor="homepage">
@@ -90,6 +119,8 @@ function ReplyForm({ replyTo }: { replyTo?: number }) {
           name="homepage"
           id="homepage"
           placeholder="https://"
+          defaultValue={userInfo.homepage}
+          onChange={(e) => setUserInfo({ homepage: e.currentTarget.value })}
         />
       </div>
       <label htmlFor="avatar">
@@ -97,7 +128,11 @@ function ReplyForm({ replyTo }: { replyTo?: number }) {
       </label>
       <div>
         <select
-          onChange={(e) => setAvatarType(e.currentTarget.value as AvatarType)}
+          onChange={(e) => {
+            const avatarType = e.currentTarget.value as AvatarType;
+            setAvatarType(avatarType);
+            setUserInfo({ avatarType });
+          }}
           defaultValue={avatarType}
         >
           <option value="email">Gravatar (Email)</option>
@@ -116,6 +151,8 @@ function ReplyForm({ replyTo }: { replyTo?: number }) {
               name="email"
               id="email"
               placeholder="Do you know Gravatar?"
+              defaultValue={userInfo.email}
+              onChange={(e) => setUserInfo({ email: e.currentTarget.value })}
             />
           </div>
         </>
@@ -129,6 +166,8 @@ function ReplyForm({ replyTo }: { replyTo?: number }) {
               name="github"
               id="github"
               placeholder="Your GitHub ID"
+              defaultValue={userInfo.github}
+              onChange={(e) => setUserInfo({ github: e.currentTarget.value })}
             />
           </div>
         </>
@@ -137,7 +176,14 @@ function ReplyForm({ replyTo }: { replyTo?: number }) {
         <>
           <label htmlFor="qq">QQ</label>
           <div>
-            <input type="text" name="qq" id="qq" placeholder="1145141919810" />
+            <input
+              type="text"
+              name="qq"
+              id="qq"
+              placeholder="1145141919810"
+              defaultValue={userInfo.qq}
+              onChange={(e) => setUserInfo({ qq: e.currentTarget.value })}
+            />
           </div>
         </>
       )}
@@ -149,7 +195,9 @@ function ReplyForm({ replyTo }: { replyTo?: number }) {
           name="content"
           id="content"
           rows={4}
+          ref={contentRef}
           placeholder="You can use **Markdown** here."
+          required
         />
       </div>
       <span></span>
@@ -160,12 +208,17 @@ function ReplyForm({ replyTo }: { replyTo?: number }) {
         </span>
       </label>
       <span></span>
-      <div>
-        <input type="hidden" name="replyTo" value={replyTo ?? 0} />
-        <button type="submit">
+      <Space direction="horizontal" gap={10}>
+        <input type="hidden" name="replyTo" value={replyTo ?? ""} />
+        <button type="submit" disabled={isSubmitting}>
           <TextReply />
         </button>
-      </div>
+        {onClose && (
+          <button type="button" onClick={onClose}>
+            <TextClose />
+          </button>
+        )}
+      </Space>
     </fetcher.Form>
   );
 }
@@ -174,7 +227,7 @@ function ReplyList({ id }: { id: number }) {
   const { replies } = useContext(RepliesContext);
 
   const reply = replies.find((reply) => reply.id === id)!;
-  const comments = replies.filter((reply) => reply.replyToId === id);
+  const comments = replies.filter((reply) => reply.replyTo === id);
   const color = randomHashColor(reply.nickname);
   const avatar =
     (reply.email &&
@@ -229,7 +282,9 @@ function ReplyList({ id }: { id: number }) {
             <TextReply />
           </span>
         </div>
-        {open && <ReplyForm replyTo={reply.id} />}
+        {open && (
+          <ReplyForm replyTo={reply.id} onClose={() => setOpen(false)} />
+        )}
         <div className="rara-reply-comments">
           {comments.map((comment) => (
             <ReplyList key={comment.id} id={comment.id} />
@@ -241,7 +296,7 @@ function ReplyList({ id }: { id: number }) {
 }
 
 export default function PostReply({ replies }: { replies: PostReplyData[] }) {
-  const majorReplies = replies.filter((reply) => reply.replyToId === null);
+  const majorReplies = replies.filter((reply) => reply.replyTo === null);
 
   return (
     <Card header={<CardTitle title={<TextReplies prefix="💬 " />} />}>

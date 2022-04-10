@@ -9,14 +9,17 @@ const options = [
   {
     language: "en-US",
     text: "English (US)",
+    color: "deep-orange",
   },
   {
     language: "zh-CN",
     text: "简体中文",
+    color: "blue",
   },
   {
     language: "ja-JP",
     text: "日本語",
+    color: "pink",
   },
 ];
 
@@ -46,6 +49,11 @@ export default function Footer() {
                     ? "rara-layout-footer-lang-select-active"
                     : ""
                 }`}
+                style={
+                  option.language === language
+                    ? { color: `var(--color-${option.color})` }
+                    : {}
+                }
                 onClick={() => setLanguage(option.language as LanguageType)}
               >
                 {option.text}
