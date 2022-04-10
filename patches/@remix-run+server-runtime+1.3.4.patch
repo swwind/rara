@@ -1,26 +1,29 @@
 diff --git a/node_modules/@remix-run/server-runtime/routeModules.d.ts b/node_modules/@remix-run/server-runtime/routeModules.d.ts
-index 737d220..1b54176 100644
+index 737d220..c20149a 100644
 --- a/node_modules/@remix-run/server-runtime/routeModules.d.ts
 +++ b/node_modules/@remix-run/server-runtime/routeModules.d.ts
-@@ -18,7 +18,7 @@ export interface DataFunctionArgs {
+@@ -18,8 +18,8 @@ export interface DataFunctionArgs {
  /**
   * A function that handles data mutations for a route.
   */
 -export interface ActionFunction {
+-    (args: DataFunctionArgs): Promise<Response> | Response | Promise<AppData> | AppData;
 +export interface ActionFunction<AppData = any> {
-     (args: DataFunctionArgs): Promise<Response> | Response | Promise<AppData> | AppData;
++    (args: DataFunctionArgs): Promise<Response | AppData> | Response | AppData;
  }
  /**
-@@ -52,7 +52,7 @@ export interface LinksFunction {
+  * A React component that is rendered when the server throws a Response.
+@@ -52,17 +52,17 @@ export interface LinksFunction {
  /**
   * A function that loads data for a route.
   */
 -export interface LoaderFunction {
+-    (args: DataFunctionArgs): Promise<Response> | Response | Promise<AppData> | AppData;
 +export interface LoaderFunction<AppData = any> {
-     (args: DataFunctionArgs): Promise<Response> | Response | Promise<AppData> | AppData;
++    (args: DataFunctionArgs): Promise<Response | AppData> | Response | AppData;
  }
  /**
-@@ -60,9 +60,9 @@ export interface LoaderFunction {
+  * A function that returns an object of name + content pairs to use for
   * `<meta>` tags for a route. These tags will be merged with (and take
   * precedence over) tags from parent routes.
   */
