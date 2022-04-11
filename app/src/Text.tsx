@@ -13,7 +13,7 @@ function createComponent(translation: Record<LanguageType, string>) {
   }) {
     const { language } = useContext(LanguageContext);
     return (
-      <span style={color ? { color: `var(--color-${color})` } : {}}>
+      <span className={color ? `color-${color}` : ""}>
         {prefix ?? ""}
         {translation[language]}
         {suffix ?? ""}

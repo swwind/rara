@@ -56,3 +56,35 @@ body {
   color: var(--fg-color-1);
   transition: background-color 0.3s, color 0.3s;
 }
+
+@mixin color($color) {
+  .color-#{$color} {
+    color: var(--color-#{$color});
+  }
+
+  .bgcolor-#{$color} {
+    background-color: var(--color-#{$color});
+  }
+}
+
+@include color("pink");
+@include color("red");
+@include color("purple");
+@include color("deep-purple");
+@include color("indigo");
+@include color("blue");
+@include color("light-blue");
+@include color("cyan");
+@include color("teal");
+@include color("green");
+@include color("light-green");
+@include color("lime");
+@include color("yellow");
+@include color("amber");
+@include color("orange");
+@include color("deep-orange");
+@include color("brown");
+@include color("grey");
+@include color("blue-grey");
+@include color("black");
+@include color("white");

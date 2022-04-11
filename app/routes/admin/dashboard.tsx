@@ -1,8 +1,7 @@
 import { Link, LoaderFunction, redirect } from "remix";
-import { TextDashboard } from "~/src/Text";
+import { TextDashboard, TextManagePosts, TextManageReplies } from "~/src/Text";
 import Card from "~/src/ui/Card";
 import CardTitle from "~/src/ui/CardTitle";
-import TextButton from "~/src/ui/TextButton";
 import { authenticate } from "~/utils/authenticate";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -17,13 +16,13 @@ export default function DashBoard() {
   return (
     <Card header={<CardTitle title={<TextDashboard />} />}>
       <div>
-        <Link to="/admin/post">
-          <TextButton>Manage Posts</TextButton>
+        <Link to="/admin/post" className="color-blue underline">
+          <TextManagePosts />
         </Link>
       </div>
       <div>
-        <Link to="/admin/reply">
-          <TextButton>Manage Replies</TextButton>
+        <Link to="/admin/reply" className="color-blue underline">
+          <TextManageReplies />
         </Link>
       </div>
     </Card>

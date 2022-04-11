@@ -30,10 +30,6 @@
       .rara-reply-meta-nickname {
         font-weight: bold;
         color: var(--color-pink);
-
-        &.link {
-          text-decoration: underline;
-        }
       }
     }
 
@@ -59,8 +55,9 @@
       }
     }
 
-    .rara-reply-comments {
-    }
+    // unused
+    // .rara-reply-comments {
+    // }
   }
 }
 

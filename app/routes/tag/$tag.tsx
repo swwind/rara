@@ -1,4 +1,4 @@
-import { LoaderFunction, useLoaderData, useParams } from "remix";
+import { LoaderFunction, MetaFunction, useLoaderData, useParams } from "remix";
 import PostList from "~/src/PostList";
 import { TextTagColon } from "~/src/Text";
 import Space from "~/src/ui/Space";
@@ -6,10 +6,22 @@ import Title from "~/src/ui/Title";
 import { getPostList, PostBriefDataWithDescription } from "~/utils/posts";
 import { parsePage } from "~/utils/utils";
 
+import metadata from "~/metadata.json";
+
 type LoaderData = {
   posts: PostBriefDataWithDescription[];
   total: number;
 };
+
+export const meta: MetaFunction<LoaderData> = ({ params }) => ({
+  title: `Tag: ${params.tag} - ${metadata.title}`,
+  description: metadata.description,
+  keywords: [...metadata.keywords, params.tag].join(", "),
+
+  "og:url": `${metadata.origin}/tag/${params.tag}`,
+  "og:title": `Tag: ${params.tag} - ${metadata.title}`,
+  "og:description": metadata.description,
+});
 
 export const loader: LoaderFunction<LoaderData> = async ({
   request,

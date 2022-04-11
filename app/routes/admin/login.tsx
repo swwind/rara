@@ -52,7 +52,7 @@ export default function AdminLogin() {
             <TextSubmit />
           </button>
           {actionData?.failed && (
-            <span style={{ color: "var(--color-red)" }}>
+            <span className="color-red">
               <TextSecretWrong />
             </span>
           )}

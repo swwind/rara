@@ -8,7 +8,6 @@ import {
 } from "~/src/Text";
 import Card from "~/src/ui/Card";
 import CardTitle from "~/src/ui/CardTitle";
-import TextButton from "~/src/ui/TextButton";
 import { authenticate } from "~/utils/authenticate";
 import { db } from "~/utils/db.server";
 
@@ -48,15 +47,13 @@ export default function PostManage() {
               <td>
                 <Link to={`/post/${post.slot}`}>{post.title}</Link>
               </td>
-              <td>
+              <td className="color-blue underline">
                 <Link to={`/admin/post/edit/${post.slot}`}>
-                  <TextButton>
-                    <TextEdit />
-                  </TextButton>
+                  <TextEdit />
                 </Link>
               </td>
               <td>{post.hidden && <TextHidden color="pink" />}</td>
-              <td style={{ color: "var(--color-grey)" }}>
+              <td className="color-grey">
                 <TextDateTime time={new Date(post.createdAt)} />
               </td>
             </tr>

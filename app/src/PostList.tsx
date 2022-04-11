@@ -7,7 +7,6 @@ import { PostBriefDataWithDescription } from "~/utils/posts";
 
 import metadata from "~/metadata.json";
 import { Link } from "remix";
-import TextButton from "./ui/TextButton";
 import { TextContinue, TextErrorHappens, TextNoPosts } from "./Text";
 import CardTitle from "./ui/CardTitle";
 
@@ -22,10 +21,8 @@ export default function PostList({ posts, total }: Props) {
       {posts.map((post) => (
         <Card header={<PostHeader post={post} />} key={post.slot}>
           <PostContent children={post.description} />
-          <Link to={`/post/${post.slot}`}>
-            <TextButton>
-              <TextContinue />
-            </TextButton>
+          <Link to={`/post/${post.slot}`} className="color-blue underline">
+            <TextContinue />
           </Link>
         </Card>
       ))}

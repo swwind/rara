@@ -14,7 +14,6 @@ import { TextDelete, TextEditColon, TextSubmit } from "~/src/Text";
 import Card from "~/src/ui/Card";
 import CardTitle from "~/src/ui/CardTitle";
 import Space from "~/src/ui/Space";
-import TextButton from "~/src/ui/TextButton";
 import { authenticate } from "~/utils/authenticate";
 import { db } from "~/utils/db.server";
 import { invariantString } from "~/utils/utils";
@@ -116,6 +115,7 @@ export const action: ActionFunction<ActionData> = async ({
 
     case ActionType.Delete: {
       await db.post.delete({ where: { slot } });
+      await db.reply.deleteMany({ where: { post: { slot } } });
 
       return redirect("/admin/post");
     }
@@ -197,13 +197,13 @@ export default function PostEdit() {
             name="_action"
             value={ActionType.Delete}
             disabled={isSubmitting}
-            style={{ color: "var(--color-red)" }}
+            className="color-red"
           >
             <TextDelete />
           </button>
         </Space>
-        <Link to={`/post/${post.slot}`}>
-          <TextButton>View</TextButton>
+        <Link to={`/post/${post.slot}`} className="color-blue underline">
+          Instant View
         </Link>
       </Form>
     </Card>

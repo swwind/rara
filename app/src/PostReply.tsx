@@ -233,10 +233,7 @@ function ReplyList({ id }: { id: number }) {
 
   return (
     <div className="rara-reply" id={`reply-${reply.id}`}>
-      <div
-        className="rara-reply-avatar"
-        style={{ backgroundColor: `var(--color-${color})` }}
-      >
+      <div className={`rara-reply-avatar bgcolor-${color}`}>
         {avatar ? (
           <img src={avatar} alt="avatar" />
         ) : (
@@ -249,17 +246,13 @@ function ReplyList({ id }: { id: number }) {
             <a
               href={reply.homepage}
               target="_blank"
-              className="rara-reply-meta-nickname link"
-              style={{ color: `var(--color-${color})` }}
+              className={`rara-reply-meta-nickname color-${color} underline`}
               rel="noreferrer noopener"
             >
               {reply.nickname}
             </a>
           ) : (
-            <span
-              className="rara-reply-meta-nickname"
-              style={{ color: `var(--color-${color})` }}
-            >
+            <span className={`rara-reply-meta-nickname color-${color}`}>
               {reply.nickname}
             </span>
           )}

@@ -46,14 +46,9 @@ export default function Footer() {
                 key={option.language}
                 className={`rara-layout-footer-lang-select ${
                   option.language === language
-                    ? "rara-layout-footer-lang-select-active"
+                    ? `rara-layout-footer-lang-select-active color-${option.color}`
                     : ""
                 }`}
-                style={
-                  option.language === language
-                    ? { color: `var(--color-${option.color})` }
-                    : {}
-                }
                 onClick={() => setLanguage(option.language as LanguageType)}
               >
                 {option.text}

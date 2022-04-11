@@ -6,7 +6,6 @@ import rehypeKatex from "rehype-katex";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import rehypeSlug from "rehype-slug";
-import TextButton from "./ui/TextButton";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeHighlight from "rehype-highlight";
 import React from "react";
@@ -67,11 +66,9 @@ export function Markdown({ major, children }: Props) {
           };
 
           return (
-            <TextButton>
-              <a {...props} {...externalProps}>
-                {children}
-              </a>
-            </TextButton>
+            <a {...props} {...externalProps} className="color-blue underline">
+              {children}
+            </a>
           );
         },
       }}

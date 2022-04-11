@@ -26,6 +26,7 @@ type LoaderData = {
     | "category"
     | "tags"
     | "createdAt"
+    | "updatedAt"
     | "title"
     | "pin"
   > & {
@@ -33,7 +34,7 @@ type LoaderData = {
   };
 };
 
-export const meta: MetaFunction<LoaderData> = ({ data }) => {
+export const meta: MetaFunction<LoaderData> = ({ data, params }) => {
   const index = data?.post.content.indexOf("<!-- more -->");
   const description =
     typeof index === "number" && index > -1
@@ -41,12 +42,14 @@ export const meta: MetaFunction<LoaderData> = ({ data }) => {
       : data?.post.content;
 
   return {
-    title: data?.post.title,
+    title: `${data?.post.title} - ${metadata.title}`,
     description,
+    keywords: [...metadata.keywords, ...(data?.post.tags ?? [])].join(", "),
 
-    "og:url": metadata.origin + "/post/" + data?.post.slot,
+    "og:url": `${metadata.origin}/post/${params.slot}`,
     "og:title": data?.post.title,
     "og:description": description,
+    "og:image": data?.post.banner,
   };
 };
 
@@ -68,6 +71,7 @@ export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
       category: true,
       tags: true,
       createdAt: true,
+      updatedAt: true,
       title: true,
       pin: true,
       replies: {
@@ -138,6 +142,30 @@ export default function PostView() {
         <PostContent children={post.content} />
       </Card>
       <PostReply replies={post.replies} />
+
+      {/* SEO optimizations */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          image: post.banner
+            ? // maybe its a absolute url
+              new URL(post.banner, metadata.origin).href
+            : [],
+          editor: metadata.author,
+          keywords: [...metadata.keywords, ...post.tags].join(" "),
+          url: `${metadata.origin}/post/${post.slot}`,
+          datePublished: new Date(post.createdAt).toISOString(),
+          dateCreated: new Date(post.createdAt).toISOString(),
+          dateModified: new Date(post.updatedAt).toISOString(),
+          author: {
+            "@type": "Person",
+            url: metadata.origin,
+            name: metadata.author,
+          },
+        })}
+      </script>
     </Space>
   );
 }
