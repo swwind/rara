@@ -224,10 +224,10 @@ function ReplyList({ id }: { id: number }) {
   const comments = replies.filter((reply) => reply.replyTo === id);
   const color = randomHashColor(reply.nickname);
   const avatar =
-    (reply.email &&
-      `https://gravatar.loli.net/avatar/${md5(reply.email)}?s=160&d=mm`) ||
+    (reply.qq && `https://q1.qlogo.cn/g?b=qq&nk=${reply.qq}&s=160`) ||
     (reply.github && `https://avatars.githubusercontent.com/${reply.github}`) ||
-    (reply.qq && `https://q1.qlogo.cn/g?b=qq&nk=${reply.qq}&s=160`);
+    (reply.email &&
+      `https://gravatar.loli.net/avatar/${md5(reply.email)}?s=160&d=mm`);
 
   const [open, setOpen] = useState(false);
 

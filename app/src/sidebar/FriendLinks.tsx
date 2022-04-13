@@ -9,7 +9,11 @@ export default function FriendLinks() {
   const { friends } = metadata;
 
   return (
-    <Card header={<CardTitle title={<TextFriendLinks prefix="🔗 " />} />}>
+    <Card
+      header={
+        <CardTitle title={<TextFriendLinks prefix="🔗 " color="teal" />} />
+      }
+    >
       <Space direction="vertical">
         {friends.map(({ link, name }) => (
           <CardButton href={link} key={name} size="large">

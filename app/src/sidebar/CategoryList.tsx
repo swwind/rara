@@ -10,7 +10,11 @@ type Props = {
 
 export default function CategoryList({ categories }: Props) {
   return (
-    <Card header={<CardTitle title={<TextCategories prefix="📁 " />} />}>
+    <Card
+      header={
+        <CardTitle title={<TextCategories prefix="📁 " color="green" />} />
+      }
+    >
       <Space direction="vertical">
         {categories.map((category) => (
           <CardButton

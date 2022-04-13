@@ -14,7 +14,7 @@ export default function Author() {
           <img src={avatar} alt="avatar" />
         </Link>
         <Space direction="vertical" gap={10} className="rara-author-meta">
-          <Link to="/" className="rara-author-meta-title">
+          <Link to="/" className="rara-author-meta-title color-blue">
             {title}
           </Link>
           <div className="rara-author-meta-subtitle">{subtitle}</div>

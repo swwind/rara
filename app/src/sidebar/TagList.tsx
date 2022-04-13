@@ -10,8 +10,10 @@ type Props = {
 
 export default function TagList({ tags }: Props) {
   return (
-    <Card header={<CardTitle title={<TextTags prefix="🏷️ " />} />}>
-      <Space direction="horizontal">
+    <Card
+      header={<CardTitle title={<TextTags prefix="🏷️ " color="orange" />} />}
+    >
+      <Space direction="horizontal" style={{ flexWrap: "wrap" }}>
         {tags.map((tag) => (
           <CardButton href={`/tag/${tag}`} key={tag} size="small" nav={true}>
             {`#${tag}`}

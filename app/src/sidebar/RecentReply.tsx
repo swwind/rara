@@ -15,7 +15,11 @@ type Props = {
 
 export default function RecentReply({ replies }: Props) {
   return (
-    <Card header={<CardTitle title={<TextRecentReplies prefix="💬 " />} />}>
+    <Card
+      header={
+        <CardTitle title={<TextRecentReplies prefix="💬 " color="pink" />} />
+      }
+    >
       <Space direction="vertical">
         {replies.map((reply) => (
           <CardButton
