@@ -61,3 +61,5 @@ export default function AdminLogin() {
     </Card>
   );
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";

@@ -209,3 +209,5 @@ export default function PostEdit() {
     </Card>
   );
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";

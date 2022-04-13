@@ -11,7 +11,7 @@ import rehypeHighlight from "rehype-highlight";
 import React from "react";
 
 type Props = {
-  major: boolean;
+  sanitize: boolean;
   children: string;
 };
 
@@ -33,26 +33,28 @@ const sanitizeOptions = {
     span: [...(defaultSchema.attributes?.span || []), "className"],
   },
 };
-export function Markdown({ major, children }: Props) {
+
+export function Markdown({ sanitize, children }: Props) {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm, remarkMath, remarkGemoji]}
       remarkRehypeOptions={{ allowDangerousHtml: true }}
       rehypePlugins={
-        major
+        sanitize
           ? [
               rehypeKatex,
               rehypeRaw,
               rehypeHighlight,
-              rehypeSlug,
-              [rehypeAutolinkHeadings, autolinkHeadingOptions],
               [rehypeSanitize, sanitizeOptions],
             ]
           : [
               rehypeKatex,
               rehypeRaw,
               rehypeHighlight,
-              [rehypeSanitize, sanitizeOptions],
+              rehypeSlug,
+              [rehypeAutolinkHeadings, autolinkHeadingOptions],
+              // not sanitize in order to allow full html in markdown post
+              // [rehypeSanitize, sanitizeOptions],
             ]
       }
       components={{

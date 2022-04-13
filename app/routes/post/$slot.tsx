@@ -169,3 +169,5 @@ export default function PostView() {
     </Space>
   );
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";

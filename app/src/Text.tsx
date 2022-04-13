@@ -261,3 +261,15 @@ export const TextNewPost = createComponent({
   "zh-CN": "新建文章",
   "ja-JP": "新規投稿",
 });
+
+export const TextManageFiles = createComponent({
+  "en-US": "Manage Files",
+  "zh-CN": "管理文件",
+  "ja-JP": "ファイル管理",
+});
+
+export const TextUpload = createComponent({
+  "en-US": "Upload",
+  "zh-CN": "上传",
+  "ja-JP": "アップロード",
+});

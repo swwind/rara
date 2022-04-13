@@ -44,7 +44,8 @@ model Reply {
 
   createdAt DateTime @default(now())
 
-  notify Boolean @default(false)
+  notify    Boolean @default(false)
+  userAgent String  @default("")
 
   replyTo Int?
 }

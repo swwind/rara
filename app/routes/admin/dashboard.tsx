@@ -1,5 +1,10 @@
 import { Link, LoaderFunction, redirect } from "remix";
-import { TextDashboard, TextManagePosts, TextManageReplies } from "~/src/Text";
+import {
+  TextDashboard,
+  TextManageFiles,
+  TextManagePosts,
+  TextManageReplies,
+} from "~/src/Text";
 import Card from "~/src/ui/Card";
 import CardTitle from "~/src/ui/CardTitle";
 import { authenticate } from "~/utils/authenticate";
@@ -25,6 +30,13 @@ export default function DashBoard() {
           <TextManageReplies />
         </Link>
       </div>
+      <div>
+        <Link to="/admin/file" className="color-blue underline">
+          <TextManageFiles />
+        </Link>
+      </div>
     </Card>
   );
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";

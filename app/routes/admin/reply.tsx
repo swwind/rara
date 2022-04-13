@@ -113,3 +113,5 @@ export default function ReplyManage() {
     </Card>
   );
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";

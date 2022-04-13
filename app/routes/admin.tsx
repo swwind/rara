@@ -11,3 +11,5 @@ export default function Admin() {
     </Space>
   );
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";

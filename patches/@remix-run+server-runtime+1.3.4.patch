@@ -1,5 +1,5 @@
 diff --git a/node_modules/@remix-run/server-runtime/routeModules.d.ts b/node_modules/@remix-run/server-runtime/routeModules.d.ts
-index 737d220..c20149a 100644
+index 737d220..ec05838 100644
 --- a/node_modules/@remix-run/server-runtime/routeModules.d.ts
 +++ b/node_modules/@remix-run/server-runtime/routeModules.d.ts
 @@ -18,8 +18,8 @@ export interface DataFunctionArgs {
@@ -8,7 +8,7 @@ index 737d220..c20149a 100644
   */
 -export interface ActionFunction {
 -    (args: DataFunctionArgs): Promise<Response> | Response | Promise<AppData> | AppData;
-+export interface ActionFunction<AppData = any> {
++export interface ActionFunction<AppData = null> {
 +    (args: DataFunctionArgs): Promise<Response | AppData> | Response | AppData;
  }
  /**
@@ -19,7 +19,7 @@ index 737d220..c20149a 100644
   */
 -export interface LoaderFunction {
 -    (args: DataFunctionArgs): Promise<Response> | Response | Promise<AppData> | AppData;
-+export interface LoaderFunction<AppData = any> {
++export interface LoaderFunction<AppData = null> {
 +    (args: DataFunctionArgs): Promise<Response | AppData> | Response | AppData;
  }
  /**
@@ -28,7 +28,7 @@ index 737d220..c20149a 100644
   * precedence over) tags from parent routes.
   */
 -export interface MetaFunction {
-+export interface MetaFunction<AppData = any> {
++export interface MetaFunction<AppData = null> {
      (args: {
 -        data: AppData;
 +        data?: AppData;

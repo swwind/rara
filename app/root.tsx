@@ -34,6 +34,11 @@ import {
   UserInfoContext,
 } from "./utils/context/userinfo";
 
+import {
+  ErrorBoundary as ErrorCard,
+  CatchBoundary as CatchCard,
+} from "./src/Boundary";
+
 export const links: LinksFunction = () => [
   {
     rel: "stylesheet",
@@ -243,27 +248,22 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
+  const title = `Error: ${error.message}`;
+
   return (
-    <Document title={`Error: ${error.message}`}>
-      <div>
-        <h1>Error: {error.message}</h1>
-        <pre>{error.stack}</pre>
-      </div>
+    <Document title={title}>
+      <ErrorCard error={error} />
     </Document>
   );
 }
 
 export function CatchBoundary() {
   const caught = useCatch();
+  const title = `Error: ${caught.status} ${caught.statusText}`;
 
   return (
-    <Document title={`Error: ${caught.status} ${caught.statusText}`}>
-      <div>
-        <h1>
-          Catch: {caught.status} {caught.statusText}
-        </h1>
-        <pre>{caught.data}</pre>
-      </div>
+    <Document title={title}>
+      <CatchCard />
     </Document>
   );
 }

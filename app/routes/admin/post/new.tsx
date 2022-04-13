@@ -39,3 +39,5 @@ export default function PostNew() {
     </Card>
   );
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";

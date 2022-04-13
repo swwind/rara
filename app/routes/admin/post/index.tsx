@@ -15,7 +15,7 @@ type LoaderData = {
   posts: Pick<Post, "title" | "slot" | "createdAt" | "hidden">[];
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction<LoaderData> = async ({ request }) => {
   if (!authenticate(request)) {
     return redirect("/admin/login");
   }
@@ -63,3 +63,5 @@ export default function PostManage() {
     </Card>
   );
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";

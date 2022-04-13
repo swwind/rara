@@ -258,7 +258,7 @@ function ReplyList({ id }: { id: number }) {
           )}
         </div>
         <div className="rara-reply-content">
-          <Markdown major={false}>{reply.content}</Markdown>
+          <Markdown sanitize={true}>{reply.content}</Markdown>
         </div>
         <div className="rara-reply-actions">
           <TextDateTime time={new Date(reply.createdAt)} />

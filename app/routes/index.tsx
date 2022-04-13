@@ -35,3 +35,5 @@ export default function Index() {
 
   return <PostList posts={posts} total={total} />;
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";

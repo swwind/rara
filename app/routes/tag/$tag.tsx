@@ -55,3 +55,5 @@ export default function CategoryPosts() {
     </Space>
   );
 }
+
+export { ErrorBoundary, CatchBoundary } from "~/src/Boundary";
