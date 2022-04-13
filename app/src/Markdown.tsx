@@ -58,10 +58,7 @@ export function Markdown({ sanitize, children }: Props) {
             ]
       }
       components={{
-        a: ({
-          children,
-          ...props
-        }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+        a: ({ children, node, ...props }) => {
           const externalProps = !props.href?.startsWith("#") && {
             target: "_blank",
             rel: "noreferrer noopener",
