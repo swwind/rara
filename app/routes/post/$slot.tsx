@@ -112,6 +112,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const content = invariantString(form.get("content"));
   const _replyTo = invariantString(form.get("replyTo"));
   const replyTo = /^\d+$/.test(_replyTo) ? parseInt(_replyTo) : null;
+  const userAgent = request.headers.get("User-Agent") ?? "";
 
   if (!content) {
     throw new Response("Content is required", { status: 400 });
@@ -127,6 +128,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       content,
       post: { connect: { slot } },
       replyTo,
+      userAgent,
     },
   });
 
