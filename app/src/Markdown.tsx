@@ -30,7 +30,7 @@ const sanitizeOptions = {
   attributes: {
     ...defaultSchema.attributes,
     code: [...(defaultSchema.attributes?.code || []), "className"],
-    span: [...(defaultSchema.attributes?.span || []), "className"],
+    span: [...(defaultSchema.attributes?.span || []), "className", "style"],
   },
 };
 

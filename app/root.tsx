@@ -20,6 +20,7 @@ import FriendLinks from "~/src/sidebar/FriendLinks";
 import RecentReply, { RecentReplyData } from "~/src/sidebar/RecentReply";
 
 import globalStyle from "~/styles/global.css";
+import katexStyle from "katex/dist/katex.min.css";
 import rokishi from "~/img/rokishi.webp";
 
 import { db } from "~/utils/db.server";
@@ -43,6 +44,10 @@ export const links: LinksFunction = () => [
   {
     rel: "stylesheet",
     href: globalStyle,
+  },
+  {
+    rel: "stylesheet",
+    href: katexStyle,
   },
   {
     rel: "preload",
