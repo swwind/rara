@@ -56,13 +56,8 @@ export const meta: MetaFunction<LoaderData> = ({ data, params }) => {
 export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
   const { slot } = params;
 
-  const post = await db.post.update({
+  const post = await db.post.findUnique({
     where: { slot },
-    data: {
-      views: {
-        increment: 1,
-      },
-    },
     select: {
       slot: true,
       banner: true,
@@ -96,6 +91,11 @@ export const loader: LoaderFunction<LoaderData> = async ({ params }) => {
   if (!post) {
     throw new Response("Post was not found", { status: 404 });
   }
+
+  await db.post.update({
+    where: { slot },
+    data: { views: { increment: 1 } },
+  });
 
   return { post };
 };

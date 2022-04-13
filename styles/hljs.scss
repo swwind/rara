@@ -1,0 +1,8 @@
+@use "hljs/light.scss" as light;
+@use "hljs/dark.scss" as dark;
+
+@include light.generate();
+
+body[data-theme="dark"] {
+  @include dark.generate();
+}

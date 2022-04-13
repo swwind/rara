@@ -18,15 +18,11 @@ export function ErrorBoundary({ error }: { error: Error }) {
 
 export function CatchBoundary() {
   const caught = useCatch();
-  const title = `Error: ${caught.status} ${caught.statusText}`;
+  const title = `${caught.status} ${caught.statusText}`;
 
   return (
     <Card header={<CardTitle title={title} />}>
-      {caught.data && (
-        <pre>
-          <code>{caught.data}</code>
-        </pre>
-      )}
+      <p>{caught.data}</p>
     </Card>
   );
 }
