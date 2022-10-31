@@ -206,6 +206,7 @@ function ReplyForm({
         </Markdown>
         <input
           id="captcha"
+          name="captcha"
           type="text"
           placeholder="(should be 4 chars)"
           required
