@@ -114,6 +114,11 @@ export const action: ActionFunction = async ({ request, params }) => {
   const replyTo = /^\d+$/.test(_replyTo) ? parseInt(_replyTo) : null;
   const userAgent = request.headers.get("User-Agent") ?? "";
 
+  const captcha = form.get("captcha");
+  if (captcha !== "πln2") {
+    throw new Response("Your math course is failed!", { status: 403 });
+  }
+
   if (!content) {
     throw new Response("Content is required", { status: 400 });
   }

@@ -2,6 +2,7 @@ import { Reply } from "@prisma/client";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import {
   TextAvatarType,
+  TextCaptcha,
   TextClose,
   TextContent,
   TextDateTime,
@@ -194,13 +195,22 @@ function ReplyForm({
           required
         />
       </div>
-      <span></span>
-      <label>
-        <input type="checkbox" name="unused" />
-        <span style={{ marginLeft: 5 }}>
-          <TextIAmARobot />
-        </span>
+      <label htmlFor="captcha">
+        <TextCaptcha />
       </label>
+      <div>
+        <Markdown sanitize={true}>
+          {
+            "$$\n2\\int_{0}^{\\frac{\\pi}{2}}\\frac{x}{\\tan x}\\,\\text{d}x\n$$"
+          }
+        </Markdown>
+        <input
+          id="captcha"
+          type="text"
+          placeholder="(should be 4 chars)"
+          required
+        />
+      </div>
       <span></span>
       <Space direction="horizontal" gap={10}>
         <input type="hidden" name="replyTo" value={replyTo ?? ""} />

@@ -148,6 +148,12 @@ export const TextAvatarType = createComponent({
   "ja-JP": "アバタータイプ",
 });
 
+export const TextCaptcha = createComponent({
+  "en-US": "Captcha",
+  "zh-CN": "验证码",
+  "ja-JP": "キャプチャ",
+});
+
 export const TextContent = createComponent({
   "en-US": "Content",
   "zh-CN": "内容",
