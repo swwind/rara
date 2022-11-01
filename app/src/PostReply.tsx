@@ -201,7 +201,7 @@ function ReplyForm({
       <div>
         <Markdown sanitize={true}>
           {
-            "$$\n2\\int_{0}^{\\frac{\\pi}{2}}\\frac{x}{\\tan x}\\,\\text{d}x\n$$"
+            "$$\n\\int_{-\\frac{\\pi}{2}}^{\\frac{\\pi}{2}}\\frac{x}{\\tan x}\\,\\text{d}x\n$$"
           }
         </Markdown>
         <input
