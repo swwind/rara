@@ -115,8 +115,8 @@ export const action: ActionFunction = async ({ request, params }) => {
   const userAgent = request.headers.get("User-Agent") ?? "";
 
   const captcha = form.get("captcha");
-  if (captcha !== "πln2") {
-    throw new Response("Your math course is failed!", { status: 403 });
+  if (captcha !== "0.3") {
+    throw new Response("Your math teacher is angry!", { status: 403 });
   }
 
   if (!content) {

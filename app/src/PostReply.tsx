@@ -199,16 +199,17 @@ function ReplyForm({
         <TextCaptcha />
       </label>
       <div>
-        <Markdown sanitize={true}>
-          {
-            "$$\n\\int_{-\\frac{\\pi}{2}}^{\\frac{\\pi}{2}}\\frac{x}{\\tan x}\\,\\text{d}x\n$$"
-          }
-        </Markdown>
+        <datalist id="answers">
+          <option value="0.3"></option>
+          <option value="0.30000000000000004"></option>
+          <option value="0.10.2"></option>
+        </datalist>
         <input
           id="captcha"
           name="captcha"
           type="text"
-          placeholder="(should be 4 chars)"
+          list="answers"
+          placeholder="0.1 + 0.2 ="
           required
         />
       </div>
